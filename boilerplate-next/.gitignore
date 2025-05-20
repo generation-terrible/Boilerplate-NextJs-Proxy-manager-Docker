@@ -5,6 +5,7 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+/.pnpm-store/
 
 # testing
 /coverage
@@ -39,3 +40,7 @@ next-env.d.ts
 # sitemap
 /public/sitemap*.xml
 /public/robots.txt
+
+# Playwright Test artifacts
+playwright-report/
+test-results/

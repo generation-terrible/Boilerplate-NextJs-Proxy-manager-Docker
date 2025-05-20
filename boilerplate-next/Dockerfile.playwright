@@ -1,0 +1,10 @@
+# Utilise l'image de base officielle de Playwright
+FROM mcr.microsoft.com/playwright:v1.52.0-jammy
+
+# Installe pnpm
+RUN npm install -g pnpm
+
+# (Optionnel) Définir l'utilisateur si besoin, mais pour l'instant laissons root pour la simplicité des installations
+# USER pwuser
+
+# Le reste sera géré par docker-compose (working_dir, volumes, command) 

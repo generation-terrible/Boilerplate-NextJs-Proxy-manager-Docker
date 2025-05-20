@@ -1,3 +1,10 @@
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mon Super Boilerplate", // Ou le titre que vous voulez
+  description: "Une description de mon application",
+};
+
 export default function Home() {
   return (
     <main

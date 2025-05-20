@@ -24,7 +24,7 @@ RUN pnpm exec prisma generate
 RUN pnpm run build
 
 # Exposer le port de l'application Next.js
-EXPOSE 3001
+EXPOSE 3000
 
 # Démarrer l'application Next.js
 CMD ["pnpm", "run", "dev"]

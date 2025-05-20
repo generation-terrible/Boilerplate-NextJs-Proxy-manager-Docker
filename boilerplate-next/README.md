@@ -6,7 +6,7 @@ First, run the development server:
 
 docker compose up --build
 
-Open [https://local.boilerplate.com](http://localhost:3001)
+Open [https://local.boilerplate.com](http://localhost:3000)
 
 You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
 
@@ -63,3 +63,7 @@ Lorsque le site vitrine est désactivé :
 - **Un fichier robots.txt restrictif est créé pour empêcher l'indexation du site par les moteurs de recherche**
 
 Pour réactiver le site vitrine, il suffit de définir `DISABLE_SHOWCASE_SITE` sur `false` ou de supprimer cette variable d'environnement.
+
+Playwright
+
+docker compose run --rm playwright test:e2e:report

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
@@ -12,15 +13,19 @@ export async function GET() {
 // POST: Ajoute un utilisateur admin
 export async function POST(request: Request) {
   const data = await request.json();
-  if (!data.email) {
-    return NextResponse.json({ error: "Email requis" }, { status: 400 });
+  if (!data.email || !data.password || !data.acceptCgu) {
+    return NextResponse.json(
+      { error: "Email, mot de passe et acceptation des CGU requis" },
+      { status: 400 }
+    );
   }
-  // On ajoute un champ "isAdmin" pour l'exemple
+  const hashedPassword = await bcrypt.hash(data.password, 10);
   const user = await prisma.user.create({
     data: {
       email: data.email,
       name: data.name || null,
       isAdmin: data.isAdmin === true,
+      passwordHash: hashedPassword,
       // Ajoute ici d'autres champs si besoin
     },
   });

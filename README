@@ -16,7 +16,7 @@ Boilerplate for Next.js with Pnpm, Tailwind, Docker, Prisma, PostgreSQL, ProxyMa
 
 8. run `docker compose up --build` in next folder
 
-9. Access your app on your virtual host url or port localhost:3001
+9. Access your app on your virtual host url or port localhost:3000
 
 10. To see prisma structure run "npx prisma studio" in Nextjs container and go on url localhost:5555
 
