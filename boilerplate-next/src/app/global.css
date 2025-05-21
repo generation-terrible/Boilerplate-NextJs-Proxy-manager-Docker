@@ -57,6 +57,62 @@
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
+
+  .theme-orange {
+    --background: 0 0% 100%;
+    --foreground: 240 10% 3.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 3.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 3.9%;
+    --primary: 24.6 95% 53.1%; /* Orange primaire */
+    --primary-foreground: 60 9.1% 97.8%;
+    --secondary: 35.6 91.7% 86.7%; /* Orange clair secondaire */
+    --secondary-foreground: 24.6 95% 33.1%;
+    --muted: 240 4.8% 95.9%;
+    --muted-foreground: 240 3.8% 46.1%;
+    --accent: 30 90% 90%; /* Orange très clair accent */
+    --accent-foreground: 24.6 95% 33.1%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 240 5.9% 90%;
+    --input: 240 5.9% 90%;
+    --ring: 24.6 95% 53.1%;
+    --chart-1: 12 76% 61%; /* Peut être ajusté pour le thème orange */
+    --chart-2: 20 70% 55%;
+    --chart-3: 30 75% 50%;
+    --chart-4: 40 80% 45%;
+    --chart-5: 50 85% 40%;
+    --radius: 0.5rem;
+  }
+
+  .theme-blue {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
+    --primary: 217.2 91.2% 59.8%; /* Bleu primaire */
+    --primary-foreground: 210 40% 98%;
+    --secondary: 217.2 91.2% 80.8%; /* Bleu clair secondaire */
+    --secondary-foreground: 217.2 91.2% 39.8%;
+    --muted: 210 40% 96.1%;
+    --muted-foreground: 215.4 16.3% 46.9%;
+    --accent: 210 40% 90.1%; /* Bleu très clair accent */
+    --accent-foreground: 217.2 91.2% 39.8%;
+    --destructive: 0 84.2% 60.2%; /* Gardé rouge pour l'instant */
+    --destructive-foreground: 0 0% 98%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 217.2 91.2% 59.8%;
+    --chart-1: 220 70% 50%; /* Peut être ajusté pour le thème bleu */
+    --chart-2: 210 75% 55%;
+    --chart-3: 200 80% 60%;
+    --chart-4: 190 85% 65%;
+    --chart-5: 180 90% 70%;
+    --radius: 0.5rem;
+  }
 }
 
 @layer base {

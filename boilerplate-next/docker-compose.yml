@@ -9,7 +9,7 @@ services:
       - 5555:5555
     volumes:
       - .:/app
-      - /app/node_modules
+      # - /app/node_modules # Commenté pour utiliser le node_modules de l'image
       - /app/.next
     environment:
       - NODE_ENV=${NODE_ENV}
