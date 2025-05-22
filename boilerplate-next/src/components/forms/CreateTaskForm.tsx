@@ -5,8 +5,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTaskSchema, type CreateTaskFormValues } from "@/lib/schemas";
 import { createTaskAction, type FormState } from "@/actions/task.actions"; // Modifié
 import { useState, useTransition } from "react";
+import { useTranslations } from "next-intl";
 
 export function CreateTaskForm() {
+  const t = useTranslations("CreateTaskForm");
   const [formState, setFormState] = useState<FormState | null>(null);
   const [isPending, startTransition] = useTransition(); // Pour gérer l'état de chargement de la Server Action
 
@@ -35,9 +37,8 @@ export function CreateTaskForm() {
     });
 
     startTransition(async () => {
-      // Note: prevState est null ici car nous n'utilisons pas useFormState pour cet exemple simple
-      // Pour une gestion plus avancée de l'état retourné par l'action, useFormState serait utile.
-      const result = await createTaskAction(null as any, formData);
+      const initialState: FormState = { message: "", issues: [], fields: {} };
+      const result = await createTaskAction(initialState, formData);
       setFormState(result);
 
       if (result && !result.issues && !result.fields) {
@@ -57,7 +58,7 @@ export function CreateTaskForm() {
           htmlFor="title"
           className="block text-sm font-medium text-gray-700"
         >
-          Titre de la tâche
+          {t("titleLabel")}
         </label>
         <input
           id="title"
@@ -75,7 +76,7 @@ export function CreateTaskForm() {
           htmlFor="description"
           className="block text-sm font-medium text-gray-700"
         >
-          Description (optionnel)
+          {t("descriptionLabel")}
         </label>
         <textarea
           id="description"
@@ -114,7 +115,7 @@ export function CreateTaskForm() {
         disabled={isPending}
         className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50"
       >
-        {isPending ? "Création en cours..." : "Créer la tâche"}
+        {isPending ? t("submitButtonLoading") : t("submitButton")}
       </button>
     </form>
   );

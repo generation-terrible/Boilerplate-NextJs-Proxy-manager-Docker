@@ -1,0 +1,21 @@
+{
+  "HomePage": {
+    "welcome": "Welcome!",
+    "boilerplateDescription": "This is your Next.js Boilerplate. Here is a sample form to create a task.",
+    "createTaskTitle": "Create Task"
+  },
+  "ThemeSwitcher": {
+    "label": "Theme:",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "orange": "Orange",
+    "blue": "Blue"
+  },
+  "CreateTaskForm": {
+    "titleLabel": "Task Title",
+    "descriptionLabel": "Description (optional)",
+    "submitButton": "Create Task",
+    "submitButtonLoading": "Creating..."
+  }
+}

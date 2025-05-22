@@ -1,69 +1,159 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Boilerplate Next.js "Production Ready"
 
-## Getting Started
+Ce projet est un boilerplate Next.js conçu pour être "production ready", intégrant les meilleures pratiques et une stack technologique moderne.
 
-First, run the development server:
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <!-- Exemple de badge -->
 
-docker compose up --build
+## ✨ Fonctionnalités Principales
 
-Open [https://local.boilerplate.com](http://localhost:3000)
+- **Framework Full-Stack**: [Next.js](https://nextjs.org/) (App Router)
+- **Langage**: [TypeScript](https://www.typescriptlang.org/)
+- **Base de Données**: [PostgreSQL](https://www.postgresql.org/) (via Docker)
+- **ORM**: [Prisma](https://www.prisma.io/)
+- **Authentification**: [NextAuth.js](https://next-auth.js.org/)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (avec thèmes multiples pré-configurés)
+- **Internationalisation (i18n)**: [next-intl](https://next-intl-docs.vercel.app/) (routage basé sur la locale, fichiers JSON)
+- **Gestion des Formulaires**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) (pour la validation)
+- **Server Actions**: Pour une logique backend moderne et intégrée.
+- **Tests**:
+  - Unitaires/Composants: [Vitest](https://vitest.dev/) & [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
+  - End-to-End (E2E): [Playwright](https://playwright.dev/) (avec configuration Docker dédiée)
+- **Linting & Formatting**: [ESLint](https://eslint.org/) (avec la nouvelle "flat config") et Prettier (implicitement via les standards Next.js)
+- **Containerisation**: [Docker](https://www.docker.com/) & Docker Compose pour les environnements de développement et de production.
+- **Gestionnaire de Paquets**: [pnpm](https://pnpm.io/)
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+## 🚀 Démarrage Rapide
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Suivez ces étapes pour mettre en place et lancer le projet localement.
 
-## Learn More
+### Prérequis
 
-To learn more about Next.js, take a look at the following resources:
+- [Node.js](https://nodejs.org/) (version 18.x ou supérieure recommandée)
+- [pnpm](https://pnpm.io/installation)
+- [Docker](https://www.docker.com/get-started/) et Docker Compose
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Étapes d'installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+1.  **Cloner le dépôt** (si ce n'est pas déjà fait) :
 
-## Deploy on Vercel
+    ```bash
+    git clone <URL_DU_DEPOT_GIT>
+    cd boilerplate-next
+    ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+2.  **Copier les variables d'environnement** :
+    Créez un fichier `.env` à la racine du projet en copiant `.env.example` (si vous en créez un, sinon listez les variables nécessaires ici) :
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+    ```bash
+    cp .env.example .env # Si .env.example existe
+    ```
 
-## Désactivation du site vitrine
+    Assurez-vous de configurer les variables nécessaires, notamment `DATABASE_URL` (qui est généralement gérée par Docker Compose mais peut être surchargée) et les secrets pour `NextAuth.js`.
 
-Il est possible de désactiver le site vitrine tout en conservant l'accès aux tableaux de bord (admin, client, agent). Cette fonctionnalité est utile pour les clients qui souhaitent uniquement utiliser les fonctionnalités de gestion sans exposer un site public.
+    Exemple de `DATABASE_URL` pour Docker (généralement dans `.env` ou directement dans `docker-compose.yml`) :
+    `DATABASE_URL="postgresql://user:password@postgres:5432/mydb?schema=public"`
 
-### Configuration
+3.  **Installer les dépendances** (si vous souhaitez les avoir localement en plus de Docker, sinon cette étape est gérée dans l'image Docker) :
 
-Pour désactiver le site vitrine, vous pouvez définir la variable d'environnement `DISABLE_SHOWCASE_SITE` sur `true` :
+    ```bash
+    pnpm install
+    ```
 
-1. Dans le fichier `.env` :
+4.  **Lancer les services avec Docker Compose** :
+    Cette commande va construire les images (si nécessaire) et démarrer les conteneurs (application Next.js, base de données PostgreSQL, service Playwright).
 
-   ```
-   DISABLE_SHOWCASE_SITE="true"
-   ```
+    ```bash
+    docker compose up -d --build
+    ```
 
-2. Dans le Dockerfile.prod :
+5.  **Exécuter les migrations Prisma** :
+    Une fois que le conteneur PostgreSQL est prêt, exécutez les migrations pour créer le schéma de base de données. Cela doit être fait _à l'intérieur_ du conteneur de l'application Next.js.
 
-   ```
-   ENV DISABLE_SHOWCASE_SITE=true
-   ```
+    ```bash
+    docker compose exec nextjs pnpm prisma migrate dev
+    ```
 
-3. Lors du démarrage du conteneur :
-   ```
-   docker run -e DISABLE_SHOWCASE_SITE=true ...
-   ```
+    Si vous avez déjà fait un `migrate deploy` dans votre script `start`, vous pourriez aussi avoir besoin de `prisma generate` si des changements ont été faits au schéma :
 
-### Comportement
+    ```bash
+    docker compose exec nextjs pnpm prisma generate
+    ```
 
-Lorsque le site vitrine est désactivé :
+6.  **Accéder à l'application** :
+    Ouvrez votre navigateur et allez sur [http://localhost:3000](http://localhost:3000).
 
-- Les utilisateurs non connectés seront automatiquement redirigés vers la page de connexion client
-- Les utilisateurs connectés auront toujours accès à leurs tableaux de bord respectifs
-- Toutes les fonctionnalités de gestion restent disponibles
-- **La génération du sitemap est automatiquement désactivée**
-- **Un fichier robots.txt restrictif est créé pour empêcher l'indexation du site par les moteurs de recherche**
+### Autres commandes utiles
 
-Pour réactiver le site vitrine, il suffit de définir `DISABLE_SHOWCASE_SITE` sur `false` ou de supprimer cette variable d'environnement.
+- **Arrêter les services Docker** :
+  ```bash
+  docker compose down
+  ```
+- **Voir les logs d'un service (ex: nextjs)** :
+  ```bash
+  docker compose logs -f nextjs
+  ```
+- **Lancer les tests unitaires/composants** :
+  Exécutez cela dans le conteneur `nextjs` ou localement si les dépendances sont installées.
+  ```bash
+  docker compose exec nextjs pnpm test
+  # ou localement
+  # pnpm test
+  ```
+- **Lancer les tests E2E Playwright** :
+  ```bash
+  docker compose exec playwright pnpm test:e2e
+  ```
+- **Voir le rapport des tests E2E** (après exécution des tests) :
+  Assurez-vous que le port 9323 est mappé dans `docker-compose.yml` pour le service `playwright`.
 
-Playwright
+  ```bash
+  docker compose exec playwright pnpm test:e2e:report
+  ```
 
-docker compose run --rm playwright test:e2e:report
+  Puis accédez à [http://localhost:9323](http://localhost:9323).
+
+- **Accéder à Prisma Studio** (pour visualiser/gérer votre base de données) :
+  Assurez-vous que le port 5555 est mappé dans `docker-compose.yml` pour le service `nextjs` et que le script pour lancer Prisma Studio est disponible.
+  Si vous avez un script comme `prisma:studio`: `prisma studio --port 5555` dans `package.json`:
+
+  ```bash
+  docker compose exec nextjs pnpm prisma:studio # Adaptez si le script a un autre nom
+  ```
+
+  Puis accédez à [http://localhost:5555](http://localhost:5555).
+
+- **Linting** :
+  ```bash
+  docker compose exec nextjs pnpm lint
+  # ou localement
+  # pnpm lint
+  ```
+
+## 📁 Structure des Dossiers Clés
+
+- `messages/`: Fichiers de traduction JSON pour `next-intl`.
+- `prisma/`: Schéma (`schema.prisma`) et migrations de la base de données.
+- `public/`: Assets statiques.
+- `scripts/`: Scripts utilitaires pour le projet.
+- `src/`: Code source de l'application.
+  - `actions/`: Server Actions de Next.js.
+  - `app/[locale]/`: Pages et layouts de l'App Router, structurés pour l'i18n.
+  - `components/`: Composants React (UI, formulaires, providers, etc.).
+  - `hooks/`: Hooks React personnalisés.
+  - `i18n/`: Configuration de `next-intl` (`routing.ts`, `request.ts`).
+  - `lib/`: Utilitaires partagés (ex: instance Prisma, schémas Zod).
+  - `middleware.ts`: Middleware Next.js (utilisé ici pour `next-intl`).
+  - `types/`: Définitions de types TypeScript personnalisées.
+- `tests/`: Tests End-to-End Playwright.
+
+## 🤝 Contribution
+
+Les contributions sont les bienvenues ! Veuillez lire les directives de contribution (si vous en créez) avant de soumettre une Pull Request.
+
+## 📜 Licence
+
+Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE.md) (à créer si vous le souhaitez) pour plus de détails.
+
+---
+
+_Ce README a été amélioré avec l'aide de Gemini._

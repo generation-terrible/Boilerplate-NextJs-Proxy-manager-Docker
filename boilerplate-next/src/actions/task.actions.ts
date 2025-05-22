@@ -1,6 +1,6 @@
 "use server"; // Nécessaire pour définir des Server Actions
 
-import { z } from "zod";
+// import { z } from "zod"; // Supprimé car non utilisé
 import { CreateTaskSchema } from "@/lib/schemas";
 import prisma from "@/lib/prisma"; // Décommenté et corrigé le chemin
 
@@ -14,8 +14,6 @@ export async function createTaskAction(
   prevState: FormState, // Pour une amélioration progressive, bien que non utilisé dans cet exemple simple au début
   formData: FormData
 ): Promise<FormState> {
-  console.log("Server Action Reçue:", Object.fromEntries(formData.entries()));
-
   const rawData = Object.fromEntries(formData.entries());
   const validatedFields = CreateTaskSchema.safeParse(rawData);
 
@@ -25,7 +23,7 @@ export async function createTaskAction(
       validatedFields.error.flatten().fieldErrors
     );
     // Aplatir les erreurs pour un format plus simple à consommer côté client
-    const fieldErrors = validatedFields.error.flatten().fieldErrors;
+    // const fieldErrors = validatedFields.error.flatten().fieldErrors; // Supprimé car non utilisé
     return {
       message: "Erreur de validation. Veuillez corriger les champs.",
       fields: rawData as Record<string, string>, // Renvoyer les données brutes
@@ -44,7 +42,6 @@ export async function createTaskAction(
         // potentiellement en récupérant la session utilisateur.
       },
     });
-    console.log("Tâche créée avec succès en BDD:", validatedFields.data);
     return { message: `Tâche "${title}" créée avec succès !` };
   } catch (e) {
     console.error("Erreur lors de la création de la tâche en BDD:", e);

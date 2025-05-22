@@ -1,0 +1,21 @@
+{
+  "HomePage": {
+    "welcome": "Bienvenue !",
+    "boilerplateDescription": "Ceci est votre Boilerplate Next.js. Voici un exemple de formulaire pour créer une tâche.",
+    "createTaskTitle": "Créer une Tâche"
+  },
+  "ThemeSwitcher": {
+    "label": "Thème :",
+    "light": "Clair",
+    "dark": "Sombre",
+    "system": "Système",
+    "orange": "Orange",
+    "blue": "Bleu"
+  },
+  "CreateTaskForm": {
+    "titleLabel": "Titre de la tâche",
+    "descriptionLabel": "Description (optionnel)",
+    "submitButton": "Créer la tâche",
+    "submitButtonLoading": "Création en cours..."
+  }
+}
