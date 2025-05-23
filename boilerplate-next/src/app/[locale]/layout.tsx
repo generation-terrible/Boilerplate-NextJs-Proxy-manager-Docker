@@ -3,9 +3,11 @@ import { Inter } from "next/font/google";
 import "./global.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages, setRequestLocale } from "next-intl/server";
+// getMessages n'est plus utilisé ici, mais setRequestLocale l'est toujours pour les enfants
+import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { locales, isValidLocale } from "@/i18n/routing";
+import { Navbar } from "@/components/layout/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,21 +49,25 @@ export default async function RootLayout({
   }
 
   // Permettre le rendu statique et fournir la locale aux Server Components enfants
+  // (ex: getTranslations dans page.tsx)
   setRequestLocale(locale);
 
-  // Charger les messages pour la locale actuelle
+  // Charger les messages directement pour NextIntlClientProvider
   let messages;
   try {
-    messages = await getMessages();
+    messages = (await import(`../../../messages/${locale}.json`)).default;
   } catch (error) {
-    notFound(); // Appeler notFound si getMessages échoue
+    notFound(); // Appeler notFound si le chargement direct échoue
   }
 
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider>{children}</ThemeProvider>
+          <ThemeProvider>
+            <Navbar />
+            {children}
+          </ThemeProvider>
         </NextIntlClientProvider>
       </body>
     </html>

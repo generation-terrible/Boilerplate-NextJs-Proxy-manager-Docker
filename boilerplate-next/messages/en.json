@@ -17,5 +17,14 @@
     "descriptionLabel": "Description (optional)",
     "submitButton": "Create Task",
     "submitButtonLoading": "Creating..."
+  },
+  "Navbar": {
+    "siteTitle": "My App",
+    "home": "Home",
+    "features": "Features",
+    "pricing": "Pricing",
+    "about": "About",
+    "changeLanguage": "Change language",
+    "openMenu": "Open menu"
   }
 }

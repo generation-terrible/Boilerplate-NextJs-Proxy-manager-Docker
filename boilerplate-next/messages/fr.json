@@ -17,5 +17,14 @@
     "descriptionLabel": "Description (optionnel)",
     "submitButton": "Créer la tâche",
     "submitButtonLoading": "Création en cours..."
+  },
+  "Navbar": {
+    "siteTitle": "Mon Appli",
+    "home": "Accueil",
+    "features": "Fonctionnalités",
+    "pricing": "Tarifs",
+    "about": "À Propos",
+    "changeLanguage": "Changer de langue",
+    "openMenu": "Ouvrir le menu"
   }
 }

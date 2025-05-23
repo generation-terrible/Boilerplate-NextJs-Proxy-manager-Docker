@@ -2,8 +2,6 @@
 
 Ce projet est un boilerplate Next.js conçu pour être "production ready", intégrant les meilleures pratiques et une stack technologique moderne.
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) <!-- Exemple de badge -->
-
 ## ✨ Fonctionnalités Principales
 
 - **Framework Full-Stack**: [Next.js](https://nextjs.org/) (App Router)
@@ -145,15 +143,3 @@ Suivez ces étapes pour mettre en place et lancer le projet localement.
   - `middleware.ts`: Middleware Next.js (utilisé ici pour `next-intl`).
   - `types/`: Définitions de types TypeScript personnalisées.
 - `tests/`: Tests End-to-End Playwright.
-
-## 🤝 Contribution
-
-Les contributions sont les bienvenues ! Veuillez lire les directives de contribution (si vous en créez) avant de soumettre une Pull Request.
-
-## 📜 Licence
-
-Ce projet est sous licence MIT - voir le fichier [LICENSE](LICENSE.md) (à créer si vous le souhaitez) pour plus de détails.
-
----
-
-_Ce README a été amélioré avec l'aide de Gemini._

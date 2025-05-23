@@ -3,31 +3,30 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { CreateTaskSchema, type CreateTaskFormValues } from "@/lib/schemas";
-import { createTaskAction, type FormState } from "@/actions/task.actions"; // Modifié
+import { createTaskAction, type FormState } from "@/actions/task.actions";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 
 export function CreateTaskForm() {
   const t = useTranslations("CreateTaskForm");
+
   const [formState, setFormState] = useState<FormState | null>(null);
-  const [isPending, startTransition] = useTransition(); // Pour gérer l'état de chargement de la Server Action
+  const [isPending, startTransition] = useTransition();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset, // Pour vider le formulaire après succès
+    reset,
   } = useForm<CreateTaskFormValues>({
     resolver: zodResolver(CreateTaskSchema),
     defaultValues: {
-      // Valeurs par défaut optionnelles
       title: "",
       description: "",
     },
   });
 
   const onSubmit = async (data: CreateTaskFormValues) => {
-    // Créer un objet FormData à partir des données du formulaire
     const formData = new FormData();
     (Object.keys(data) as Array<keyof CreateTaskFormValues>).forEach((key) => {
       const value = data[key];
@@ -42,8 +41,7 @@ export function CreateTaskForm() {
       setFormState(result);
 
       if (result && !result.issues && !result.fields) {
-        // Si succès (pas d'issues ou de fields retournés)
-        reset(); // Vider le formulaire
+        reset();
       }
     });
   };
