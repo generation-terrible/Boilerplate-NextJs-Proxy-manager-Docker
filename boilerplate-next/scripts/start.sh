@@ -1,12 +1,10 @@
 #!/bin/sh
+set -e # Quitter immédiatement si une commande échoue
 
-# Vérifier si le site vitrine est désactivé
+echo "🚀 Applying database migrations..."
+pnpm exec prisma migrate deploy
+echo "✅ Database migrations applied."
 
-
-echo "🔄 Génération du sitemap..."
-./node_modules/.bin/next-sitemap --config next-sitemap.config.js
-echo "✅ Sitemap généré"
-
-
-# Démarrer le serveur
+echo "🔗 Starting Next.js server..."
+# La variable d'environnement PORT est automatiquement utilisée par Next.js
 exec node server.js 

@@ -26,5 +26,28 @@
     "about": "About",
     "changeLanguage": "Change language",
     "openMenu": "Open menu"
+  },
+  "RegisterPage": {
+    "formTitle": "Create Account",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name (optional)",
+    "emailLabel": "Email",
+    "emailPlaceholder": "name@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Confirm Password",
+    "showPassword": "Show",
+    "hidePassword": "Hide",
+    "acceptTermsPrefix": "I accept the",
+    "termsAndConditions": "terms and conditions",
+    "submitButton": "Sign Up",
+    "submitButtonLoading": "Signing Up...",
+    "alreadyHaveAccount": "Already have an account?",
+    "loginLink": "Log in",
+    "allFieldsRequired": "All fields are required and terms must be accepted.",
+    "passwordsDoNotMatch": "Passwords do not match.",
+    "registrationError": "Error during registration.",
+    "registrationSuccess": "Registration successful! Redirecting...",
+    "networkError": "Network or server error: {error}"
   }
 }

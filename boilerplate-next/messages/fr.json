@@ -26,5 +26,28 @@
     "about": "À Propos",
     "changeLanguage": "Changer de langue",
     "openMenu": "Ouvrir le menu"
+  },
+  "RegisterPage": {
+    "formTitle": "Créer un compte",
+    "nameLabel": "Nom",
+    "namePlaceholder": "Votre nom (optionnel)",
+    "emailLabel": "Email",
+    "emailPlaceholder": "nom@example.com",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "••••••••",
+    "confirmPasswordLabel": "Confirmer le mot de passe",
+    "showPassword": "Afficher",
+    "hidePassword": "Masquer",
+    "acceptTermsPrefix": "J'accepte les",
+    "termsAndConditions": "conditions générales d'utilisation",
+    "submitButton": "S'inscrire",
+    "submitButtonLoading": "Inscription...",
+    "alreadyHaveAccount": "Déjà un compte ?",
+    "loginLink": "Se connecter",
+    "allFieldsRequired": "Tous les champs sont obligatoires et les CGU doivent être acceptées.",
+    "passwordsDoNotMatch": "Les mots de passe ne correspondent pas.",
+    "registrationError": "Erreur lors de l'inscription.",
+    "registrationSuccess": "Inscription réussie ! Redirection...",
+    "networkError": "Erreur réseau ou serveur : {error}"
   }
 }

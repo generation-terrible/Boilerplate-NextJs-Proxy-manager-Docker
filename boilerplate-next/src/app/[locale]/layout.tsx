@@ -11,16 +11,6 @@ import { Navbar } from "@/components/layout/Navbar";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// Optionnel: pour générer des métadonnées localisées
-// export async function generateMetadata({ params: { locale } }: { params: { locale: string } }): Promise<Metadata> {
-//   const messages = (await import(`../../../messages/${locale}.json`)).default;
-//   // Exemple: supposer que vous avez une clé "siteTitle" dans vos messages
-//   const t = (key: string) => messages.Metadata?.[key] || key;
-//   return {
-//     title: t('siteTitle'),
-//   };
-// }
-
 // Permet à Next.js de connaître les locales supportées pour la génération statique
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));

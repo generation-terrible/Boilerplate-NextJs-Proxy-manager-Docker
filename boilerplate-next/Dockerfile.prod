@@ -13,7 +13,7 @@ WORKDIR /app
 COPY package.json ./
 COPY pnpm-lock.yaml ./
 
-# Installer les dépendances
+# Installer les dépendances (y compris devDependencies pour le build)
 RUN pnpm install
 
 # Build application
@@ -22,11 +22,12 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
-# Set SITE_URL for sitemap generation
+# Set SITE_URL for sitemap generation (sera passé comme build-arg)
+ARG SITE_URL
 ENV SITE_URL=${SITE_URL}
-ENV NODE_ENV=${NODE_ENV}
+ENV NODE_ENV=production
 
-# Build sans génération du sitemap
+# Build
 RUN NEXT_TELEMETRY_DISABLED=1 pnpm run build
 
 # Production image
@@ -36,24 +37,24 @@ WORKDIR /app
 ENV NEXT_TELEMETRY_DISABLED=1
 ENV NODE_ENV=production
 
-# Pas besoin de créer un nouvel utilisateur, on utilise "node" fourni par l'image
-# Create necessary directories with correct permissions
+# Créer les répertoires nécessaires avec les bonnes permissions
+# L'utilisateur "node" existe déjà dans l'image de base node:alpine
 RUN mkdir -p /app/.next/cache /app/public && \
     chown -R node:node /app
 
-# Copy necessary files with correct ownership
-COPY --from=builder --chown=node:node /app/node_modules ./node_modules
-COPY --from=builder --chown=node:node /app/next-sitemap.config.js ./
-COPY --from=builder --chown=node:node /app/package.json ./
+# Copier les fichiers nécessaires depuis le builder avec les bonnes permissions
+COPY --from=builder --chown=node:node /app/package.json ./package.json
 COPY --from=builder --chown=node:node /app/public ./public
-COPY --from=builder --chown=node:node /app/.next/standalone ./
+# Copier le contenu du dossier standalone directement dans /app
+COPY --from=builder --chown=node:node /app/.next/standalone/./ .
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static
+COPY --from=builder --chown=node:node /app/prisma ./prisma
 COPY --chown=node:node scripts/start.sh /app/start.sh
 
-# Set more restrictive permissions
+# Définir des permissions plus restrictives
 RUN chmod 755 /app && \
-    chmod 644 next-sitemap.config.js package.json && \
-    chmod -R 755 public node_modules .next && \
+    chmod 644 package.json && \
+    chmod -R 755 public .next prisma && \
     chmod 755 /app/start.sh
 
 USER node
