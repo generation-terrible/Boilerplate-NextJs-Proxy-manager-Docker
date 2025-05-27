@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import bcrypt from "bcrypt";
+import bcryptjs from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
 // GET: Liste tous les utilisateurs
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  const hashedPassword = await bcrypt.hash(data.password, 10);
+  const hashedPassword = await bcryptjs.hash(data.password, 10);
   const user = await prisma.user.create({
     data: {
       email: data.email,

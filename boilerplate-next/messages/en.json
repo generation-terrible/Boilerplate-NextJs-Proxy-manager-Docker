@@ -49,5 +49,34 @@
     "registrationError": "Error during registration.",
     "registrationSuccess": "Registration successful! Redirecting...",
     "networkError": "Network or server error: {error}"
+  },
+
+  "LoginPage": {
+    "formTitle": "Login",
+    "emailLabel": "Email",
+    "emailPlaceholder": "Enter your email",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "submitButton": "Login",
+    "submitButtonLoading": "Logging in...",
+    "emailAndPasswordRequired": "Email and password are required.",
+    "invalidCredentials": "Login failed. Please check your email and password.",
+    "loginFailedUnexpectedly": "Login failed due to an unexpected error.",
+    "networkOrServerError": "Network or server error. Please try again.",
+    "noAccountYet": "Don't have an account yet?",
+    "registerLink": "Register here",
+    "loadingSession": "Loading session..."
+  },
+  "DashboardPage": {
+    "title": "My Dashboard",
+    "welcomeMessage": "Welcome, {userName}!",
+    "guest": "Guest",
+    "emailLabel": "Email",
+    "roleLabel": "Role",
+    "adminRole": "Administrator",
+    "userRole": "User",
+    "sessionInfoTitle": "Session Information",
+    "loadingSession": "Loading session data...",
+    "accessDenied": "Access Denied. You must be logged in to view this page."
   }
 }

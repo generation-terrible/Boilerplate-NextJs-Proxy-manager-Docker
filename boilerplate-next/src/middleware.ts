@@ -1,18 +1,41 @@
-import createMiddleware from "next-intl/middleware";
-import { locales, defaultLocale, localePrefix } from "./i18n/routing"; // Nous créerons ce fichier ensuite
+import { auth } from "@/auth";
+import createIntlMiddleware from "next-intl/middleware";
+import { NextRequest, NextResponse } from "next/server";
+import { locales, defaultLocale, localePrefix } from "./i18n/routing";
+import { Session } from "next-auth";
 
-export default createMiddleware({
-  // A list of all locales that are supported
+const publicPagePatterns = ["/login"];
+
+const intlMiddleware = createIntlMiddleware({
   locales,
-  // Used when no locale matches
   defaultLocale,
-  // Prepend the locale prefix (e.g. `/en`) to pathnames
   localePrefix,
 });
 
+interface AuthenticatedRequest extends NextRequest {
+  auth?: Session | null;
+}
+
+export default async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  const publicPathnameRegex = RegExp(
+    `^(/(${locales.join("|")}))?(${publicPagePatterns.join("|")})/?$`,
+    "i"
+  );
+
+  const isPublicPageRequest = publicPathnameRegex.test(pathname);
+  const isApiAuthRoute = pathname.startsWith("/api/auth");
+
+  if (isPublicPageRequest || isApiAuthRoute) {
+    return intlMiddleware(request);
+  }
+
+  return auth((req: AuthenticatedRequest) => {
+    return intlMiddleware(req as NextRequest);
+  })(request, {} as any) as any;
+}
+
 export const config = {
-  // Match all pathnames except for
-  // - … if they start with `/api`, `/trpc`, `/_next` or `/_vercel`
-  // - … the ones containing a dot (e.g. `favicon.ico`)
-  matcher: ["/((?!api|trpc|_next|_vercel|.*\\..*).*)"],
+  matcher: ["/((?!api/auth|_next/static|_next/image|favicon.ico|api/).*)", "/"],
 };

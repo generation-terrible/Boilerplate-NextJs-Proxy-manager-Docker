@@ -1,7 +1,6 @@
-import NextAuth from "next-auth";
-import { authConfig } from "./auth.config";
+import { handlers } from "@/auth"; // Importer depuis src/auth.ts
 
-// Créer l'objet handlers à exporter
-export const {
-  handlers: { GET, POST },
-} = NextAuth(authConfig);
+export const { GET, POST } = handlers;
+
+// Forcer l'exécution de ces routes API dans l'environnement Node.js
+export const runtime = "nodejs";

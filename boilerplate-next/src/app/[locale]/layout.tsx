@@ -8,6 +8,7 @@ import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { locales, isValidLocale } from "@/i18n/routing";
 import { Navbar } from "@/components/layout/Navbar";
+import NextAuthProvider from "@/components/providers/NextAuthProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -53,12 +54,14 @@ export default async function RootLayout({
   return (
     <html lang={locale} suppressHydrationWarning>
       <body className={inter.className}>
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          <ThemeProvider>
-            <Navbar />
-            {children}
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <NextAuthProvider>
+          <NextIntlClientProvider locale={locale} messages={messages}>
+            <ThemeProvider>
+              <Navbar />
+              {children}
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );

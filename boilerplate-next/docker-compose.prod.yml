@@ -13,10 +13,10 @@ services:
     networks:
       - ${PROXY_NETWORK_NAME:?err_proxy_network_not_defined}
     environment:
-      - APP_URL=${APP_URL:?err_app_url_not_defined}
-      - DATABASE_URL=${DATABASE_URL:?err_database_url_not_defined}
-      - NEXTAUTH_URL=${APP_URL}
-      - NEXTAUTH_SECRET=${NEXTAUTH_SECRET:?err_nextauth_secret_not_defined}
+      - APP_URL=${APP_URL}
+      - DATABASE_URL=${DATABASE_URL}
+      - AUTH_URL=${APP_URL}
+      - AUTH_SECRET=${AUTH_SECRET}
       - DEFAULT_EMAIL=${DEFAULT_EMAIL:-noreply@example.com}
     user: "node"
 

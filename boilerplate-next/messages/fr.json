@@ -49,5 +49,33 @@
     "registrationError": "Erreur lors de l'inscription.",
     "registrationSuccess": "Inscription réussie ! Redirection...",
     "networkError": "Erreur réseau ou serveur : {error}"
+  },
+  "LoginPage": {
+    "formTitle": "Connexion",
+    "emailLabel": "Adresse e-mail",
+    "emailPlaceholder": "Entrez votre e-mail",
+    "passwordLabel": "Mot de passe",
+    "passwordPlaceholder": "Entrez votre mot de passe",
+    "submitButton": "Se connecter",
+    "submitButtonLoading": "Connexion en cours...",
+    "emailAndPasswordRequired": "L'e-mail et le mot de passe sont requis.",
+    "invalidCredentials": "Échec de la connexion. Veuillez vérifier votre e-mail et votre mot de passe.",
+    "loginFailedUnexpectedly": "La connexion a échoué en raison d'une erreur inattendue.",
+    "networkOrServerError": "Erreur réseau ou serveur. Veuillez réessayer.",
+    "noAccountYet": "Pas encore de compte ?",
+    "registerLink": "Inscrivez-vous ici",
+    "loadingSession": "Chargement de la session..."
+  },
+  "DashboardPage": {
+    "title": "Mon Tableau de Bord",
+    "welcomeMessage": "Bienvenue, {userName} !",
+    "guest": "Invité",
+    "emailLabel": "Email",
+    "roleLabel": "Rôle",
+    "adminRole": "Administrateur",
+    "userRole": "Utilisateur",
+    "sessionInfoTitle": "Informations de Session",
+    "loadingSession": "Chargement des données de session...",
+    "accessDenied": "Accès Refusé. Vous devez être connecté pour voir cette page."
   }
 }
