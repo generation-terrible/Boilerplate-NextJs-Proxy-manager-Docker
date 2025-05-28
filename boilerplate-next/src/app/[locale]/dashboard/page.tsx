@@ -1,74 +1,56 @@
-"use client";
+import { getTranslations } from "next-intl/server";
+import { auth } from "@/auth"; // Importer auth depuis votre configuration
+import { DashboardClientContent } from "@/components/client/DashboardClientContent";
+import { redirect } from "next/navigation"; // Pour la redirection si non authentifié
+import type { Session } from "next-auth"; // Importer le type Session
 
-import { useSession } from "next-auth/react";
-import { useTranslations } from "next-intl";
-import { setRequestLocale } from "next-intl/server"; // Importer pour Server Components si nécessaire, mais ici c'est un Client Component
+type LocalePageProps = {
+  params: {
+    locale: string;
+  };
+};
 
-// Note: Si cette page était un Server Component, vous auriez besoin de `getTranslations`
-// et potentiellement de `setRequestLocale` si vous passez la locale via params.
-// Pour un Client Component, `useTranslations` et `useSession` suffisent.
+export async function generateMetadata({ params }: LocalePageProps) {
+  const t = await getTranslations({
+    locale: params.locale,
+    namespace: "DashboardPage",
+  });
+  // nous n'avons pas encore la session ici de manière simple. Gardons un titre générique.
+  return {
+    title: t("title"),
+  };
+}
 
-export default function DashboardPage() {
-  const t = useTranslations("DashboardPage"); // Créez des traductions pour DashboardPage
-  const { data: session, status } = useSession();
+export default async function DashboardPage({ params }: LocalePageProps) {
+  const session = await auth(); // Utiliser auth() pour récupérer la session
+  const locale = params.locale;
 
-  // setRequestLocale n'est pas nécessaire ici car c'est un client component
-  // et la locale est gérée par NextIntlClientProvider dans le layout.
-
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>{t("loadingSession")}</p>
-      </div>
-    );
+  // Si aucune session, rediriger vers login (le middleware devrait déjà le faire, mais c'est une double sécurité)
+  if (!session) {
+    redirect(`/${locale}/login?callbackUrl=/${locale}/dashboard`);
   }
 
-  if (status === "unauthenticated") {
-    // Normalement, le middleware devrait déjà avoir redirigé.
-    // Ceci est une sécurité supplémentaire ou pour des cas où le middleware ne s'appliquerait pas.
-    // Dans une application réelle, vous pourriez rediriger ici ou afficher un message d'accès refusé.
-    // Pour ce test, le middleware est censé gérer la redirection.
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <p>{t("accessDenied")}</p>
-      </div>
-    );
-  }
+  const t = await getTranslations({ locale, namespace: "DashboardPage" });
 
-  // status === "authenticated"
+  // Les traductions qui n'ont PAS besoin d'interpolation dynamique côté CLIENT
+  // ou qui sont simples peuvent être passées.
+  // welcomeMessage sera géré par le client avec useTranslations.
+  const translationsForClient = {
+    title: t("title"), // Peut toujours être utile pour le client, même si title vient aussi de metadata
+    loadingSession: t("loadingSession"),
+    accessDenied: t("accessDenied"),
+    guest: t("guest"),
+    emailLabel: t("emailLabel"),
+    roleLabel: t("roleLabel"),
+    adminRole: t("adminRole"),
+    userRole: t("userRole"),
+    sessionInfoTitle: t("sessionInfoTitle"),
+  };
+
   return (
-    <div className="min-h-screen bg-background text-foreground p-8">
-      <header className="mb-8">
-        <h1 className="text-3xl font-bold text-primary">{t("title")}</h1>
-      </header>
-      <main>
-        <p className="text-lg mb-4">
-          {t("welcomeMessage", { userName: session?.user?.name || t("guest") })}
-        </p>
-
-        {session?.user?.email && (
-          <p className="mb-2">
-            <span className="font-semibold">{t("emailLabel")}:</span>{" "}
-            {session.user.email}
-          </p>
-        )}
-
-        {typeof session?.user?.isAdmin === "boolean" && (
-          <p className="mb-2">
-            <span className="font-semibold">{t("roleLabel")}:</span>
-            {session.user.isAdmin ? t("adminRole") : t("userRole")}
-          </p>
-        )}
-
-        <div className="mt-6 p-4 border border-border rounded-lg bg-card">
-          <h2 className="text-xl font-semibold mb-2 text-accent-foreground">
-            {t("sessionInfoTitle")}
-          </h2>
-          <pre className="text-sm bg-muted p-3 rounded overflow-x-auto">
-            {JSON.stringify(session, null, 2)}
-          </pre>
-        </div>
-      </main>
-    </div>
+    <DashboardClientContent
+      translations={translationsForClient} // Ne contient plus welcomeMessage(Template)
+      initialSession={session as Session} // Passer la session (typée) au composant client
+    />
   );
 }

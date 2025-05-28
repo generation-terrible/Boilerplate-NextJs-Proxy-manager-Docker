@@ -1,8 +1,9 @@
 {
   "HomePage": {
     "welcome": "Welcome!",
-    "boilerplateDescription": "This is your Next.js Boilerplate. Here is a sample form to create a task.",
-    "createTaskTitle": "Create Task"
+    "boilerplateDescription": "This is your Next.js Boilerplate. Ready to build something amazing!",
+    "showSuccessToastButton": "Show Success Toast",
+    "showErrorToastButton": "Show Error Toast"
   },
   "ThemeSwitcher": {
     "label": "Theme:",
@@ -11,12 +12,6 @@
     "system": "System",
     "orange": "Orange",
     "blue": "Blue"
-  },
-  "CreateTaskForm": {
-    "titleLabel": "Task Title",
-    "descriptionLabel": "Description (optional)",
-    "submitButton": "Create Task",
-    "submitButtonLoading": "Creating..."
   },
   "Navbar": {
     "siteTitle": "My App",
@@ -78,5 +73,17 @@
     "sessionInfoTitle": "Session Information",
     "loadingSession": "Loading session data...",
     "accessDenied": "Access Denied. You must be logged in to view this page."
+  },
+  "ErrorPage": {
+    "title": "Something went wrong!",
+    "message": "An unexpected error occurred. We are sorry for the inconvenience.",
+    "retryButton": "Try again"
+  },
+  "Loading": {
+    "loadingText": "Loading, please wait..."
+  },
+  "Toasts": {
+    "successMessageDefault": "Operation successful!",
+    "errorMessageDefault": "An error occurred."
   }
 }

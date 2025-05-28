@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -17,14 +18,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-  SheetClose,
-} from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Globe, Menu as MenuIcon } from "lucide-react";
 import {
@@ -33,6 +26,25 @@ import {
   defaultLocale,
   localeFlags,
 } from "@/i18n/routing";
+
+const Sheet = dynamic(() =>
+  import("@/components/ui/sheet").then((mod) => mod.Sheet)
+);
+const SheetContent = dynamic(() =>
+  import("@/components/ui/sheet").then((mod) => mod.SheetContent)
+);
+const SheetHeader = dynamic(() =>
+  import("@/components/ui/sheet").then((mod) => mod.SheetHeader)
+);
+const SheetTitle = dynamic(() =>
+  import("@/components/ui/sheet").then((mod) => mod.SheetTitle)
+);
+const SheetTrigger = dynamic(() =>
+  import("@/components/ui/sheet").then((mod) => mod.SheetTrigger)
+);
+const SheetClose = dynamic(() =>
+  import("@/components/ui/sheet").then((mod) => mod.SheetClose)
+);
 
 export function Navbar() {
   const t = useTranslations("Navbar");
@@ -108,37 +120,47 @@ export function Navbar() {
           </DropdownMenu>
 
           <div className="md:hidden">
-            <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
-              <SheetTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <MenuIcon className="h-6 w-6" />
-                  <span className="sr-only">{t("openMenu")}</span>
-                </Button>
-              </SheetTrigger>
-              <SheetContent
-                side="right"
-                className="w-[280px] sm:w-[320px] pt-8"
-              >
-                <SheetHeader className="mb-4">
-                  <SheetTitle className="text-center text-xl">
-                    {t("openMenu")}
-                  </SheetTitle>
-                </SheetHeader>
-                <div className="flex flex-col space-y-3">
-                  {navLinks.map((link) => (
-                    <SheetClose asChild key={link.href}>
-                      <Link
-                        href={link.href}
-                        className="text-lg hover:text-primary transition-colors py-2 px-4 rounded-md text-center"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                      >
-                        {link.label}
-                      </Link>
-                    </SheetClose>
-                  ))}
-                </div>
-              </SheetContent>
-            </Sheet>
+            {Sheet &&
+              SheetTrigger &&
+              SheetContent &&
+              SheetHeader &&
+              SheetTitle &&
+              SheetClose && (
+                <Sheet
+                  open={isMobileMenuOpen}
+                  onOpenChange={setIsMobileMenuOpen}
+                >
+                  <SheetTrigger asChild>
+                    <Button variant="outline" size="icon">
+                      <MenuIcon className="h-6 w-6" />
+                      <span className="sr-only">{t("openMenu")}</span>
+                    </Button>
+                  </SheetTrigger>
+                  <SheetContent
+                    side="right"
+                    className="w-[280px] sm:w-[320px] pt-8"
+                  >
+                    <SheetHeader className="mb-4">
+                      <SheetTitle className="text-center text-xl">
+                        {t("openMenu")}
+                      </SheetTitle>
+                    </SheetHeader>
+                    <div className="flex flex-col space-y-3">
+                      {navLinks.map((link) => (
+                        <SheetClose asChild key={link.href}>
+                          <Link
+                            href={link.href}
+                            className="text-lg hover:text-primary transition-colors py-2 px-4 rounded-md text-center"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                          >
+                            {link.label}
+                          </Link>
+                        </SheetClose>
+                      ))}
+                    </div>
+                  </SheetContent>
+                </Sheet>
+              )}
           </div>
         </div>
       </div>

@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import { locales, isValidLocale } from "@/i18n/routing";
 import { Navbar } from "@/components/layout/Navbar";
 import NextAuthProvider from "@/components/providers/NextAuthProvider";
+import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -47,7 +48,15 @@ export default async function RootLayout({
   let messages;
   try {
     messages = (await import(`../../../messages/${locale}.json`)).default;
-  } catch (error) {
+  } catch (e) {
+    // Amélioration de la gestion des erreurs typées
+    if (e instanceof Error) {
+      console.error(`Failed to load messages for locale ${locale}:`, e.message);
+    } else {
+      console.error(
+        `An unknown error occurred while loading messages for locale ${locale}`
+      );
+    }
     notFound(); // Appeler notFound si le chargement direct échoue
   }
 
@@ -57,6 +66,32 @@ export default async function RootLayout({
         <NextAuthProvider>
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider>
+              <Toaster
+                position="top-right"
+                toastOptions={{
+                  className: "",
+                  duration: 5000,
+                  style: {
+                    background: "var(--background)",
+                    color: "var(--foreground)",
+                    border: "1px solid var(--border)",
+                  },
+                  success: {
+                    duration: 3000,
+                    iconTheme: {
+                      primary: "green",
+                      secondary: "white",
+                    },
+                  },
+                  error: {
+                    duration: 5000,
+                    iconTheme: {
+                      primary: "red",
+                      secondary: "white",
+                    },
+                  },
+                }}
+              />
               <Navbar />
               {children}
             </ThemeProvider>

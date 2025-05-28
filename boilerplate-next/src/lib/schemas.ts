@@ -1,11 +1,11 @@
 import { z } from "zod";
 
-export const CreateTaskSchema = z.object({
-  title: z
-    .string()
-    .min(3, { message: "Le titre doit contenir au moins 3 caractères." })
-    .max(100, { message: "Le titre ne peut pas dépasser 100 caractères." }),
-  description: z.string().optional(), // La description est optionnelle
-});
+// Les schémas liés aux tâches ont été supprimés pour un boilerplate plus générique.
+// Vous pouvez ajouter vos propres schémas de validation Zod ici.
 
-export type CreateTaskFormValues = z.infer<typeof CreateTaskSchema>;
+// Exemple de schéma (à adapter ou supprimer) :
+// export const ExampleSchema = z.object({
+//   name: z.string().min(1, { message: "Name is required." }),
+// });
+
+// export type ExampleFormValues = z.infer<typeof ExampleSchema>;

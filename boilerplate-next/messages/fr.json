@@ -1,8 +1,9 @@
 {
   "HomePage": {
     "welcome": "Bienvenue !",
-    "boilerplateDescription": "Ceci est votre Boilerplate Next.js. Voici un exemple de formulaire pour créer une tâche.",
-    "createTaskTitle": "Créer une Tâche"
+    "boilerplateDescription": "Ceci est votre Boilerplate Next.js. Prêt à construire quelque chose d'incroyable !",
+    "showSuccessToastButton": "Afficher Toast Succès",
+    "showErrorToastButton": "Afficher Toast Erreur"
   },
   "ThemeSwitcher": {
     "label": "Thème :",
@@ -11,12 +12,6 @@
     "system": "Système",
     "orange": "Orange",
     "blue": "Bleu"
-  },
-  "CreateTaskForm": {
-    "titleLabel": "Titre de la tâche",
-    "descriptionLabel": "Description (optionnel)",
-    "submitButton": "Créer la tâche",
-    "submitButtonLoading": "Création en cours..."
   },
   "Navbar": {
     "siteTitle": "Mon Appli",
@@ -77,5 +72,17 @@
     "sessionInfoTitle": "Informations de Session",
     "loadingSession": "Chargement des données de session...",
     "accessDenied": "Accès Refusé. Vous devez être connecté pour voir cette page."
+  },
+  "ErrorPage": {
+    "title": "Une erreur est survenue !",
+    "message": "Une erreur inattendue s'est produite. Nous sommes désolés pour ce désagrément.",
+    "retryButton": "Réessayer"
+  },
+  "Loading": {
+    "loadingText": "Chargement en cours, veuillez patienter..."
+  },
+  "Toasts": {
+    "successMessageDefault": "Opération réussie avec succès !",
+    "errorMessageDefault": "Une erreur est survenue."
   }
 }

@@ -1,7 +1,5 @@
-// import { Metadata } from "next"; // Retiré, generateMetadata est utilisé
-import { CreateTaskForm } from "@/components/forms/CreateTaskForm";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 import { getTranslations } from "next-intl/server";
+import { HomePageClientContent } from "@/components/client/HomePageClientContent";
 
 // Définir un type pour les props de la page et de generateMetadata en accord avec Next.js 15
 type PageParams = Promise<{
@@ -14,7 +12,7 @@ type LocalePageProps = {
   // searchParams?: { [key: string]: string | string[] | undefined }; // Si vous utilisez searchParams
 };
 
-// Générer les métadonnées dynamiquement et localisées
+// Générer les métadonnées dynamiquement et localisées (reste côté serveur)
 export async function generateMetadata({
   params: paramsPromise,
 }: LocalePageProps) {
@@ -22,30 +20,28 @@ export async function generateMetadata({
   const locale = awaitedParams.locale;
   const t = await getTranslations({ locale, namespace: "HomePage" });
   return {
-    title: `${t("createTaskTitle")} | Mon Super Boilerplate`,
+    title: `${t("welcome")} | Mon Super Boilerplate`,
     description: t("boilerplateDescription"),
   };
 }
 
+// La page est maintenant un Server Component
 export default async function Home({ params: paramsPromise }: LocalePageProps) {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
-  const t = await getTranslations({ locale, namespace: "HomePage" });
 
-  return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-8">
-      <div className="w-full max-w-xl space-y-8">
-        <ThemeSwitcher />
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-            {t("welcome")}
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            {t("boilerplateDescription")}
-          </p>
-        </div>
-        <CreateTaskForm />
-      </div>
-    </main>
-  );
+  // Récupérer les traductions côté serveur
+  const tHomePage = await getTranslations({ locale, namespace: "HomePage" });
+  const tToasts = await getTranslations({ locale, namespace: "Toasts" });
+
+  const allTranslations = {
+    welcomeText: tHomePage("welcome"),
+    descriptionText: tHomePage("boilerplateDescription"),
+    successToastMessage: tToasts("successMessageDefault"),
+    errorToastMessage: tToasts("errorMessageDefault"),
+    showSuccessButtonText: tHomePage("showSuccessToastButton"),
+    showErrorButtonText: tHomePage("showErrorToastButton"),
+  };
+
+  return <HomePageClientContent translations={allTranslations} />;
 }
