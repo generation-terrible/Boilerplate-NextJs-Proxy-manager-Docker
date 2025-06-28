@@ -43,7 +43,7 @@
     "passwordsDoNotMatch": "Passwords do not match.",
     "registrationError": "Error during registration.",
     "registrationSuccess": "Registration successful! Redirecting...",
-    "networkError": "Network or server error: {error}"
+    "networkError": "Network or server error."
   },
 
   "LoginPage": {

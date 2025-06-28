@@ -9,7 +9,6 @@ WORKDIR /app
 
 # Copier package.json et pnpm-lock.yaml
 COPY package.json ./
-COPY pnpm-lock.yaml ./
 
 # Installer les dépendances
 RUN pnpm install

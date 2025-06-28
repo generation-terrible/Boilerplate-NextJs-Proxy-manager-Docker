@@ -1,21 +1,8 @@
 import { getTranslations } from "next-intl/server";
 import { HomePageClientContent } from "@/components/client/HomePageClientContent";
 
-// Définir un type pour les props de la page et de generateMetadata en accord avec Next.js 15
-type PageParams = Promise<{
-  locale: string;
-  [key: string]: string | string[] | undefined;
-}>;
-
-type LocalePageProps = {
-  params: PageParams;
-  // searchParams?: { [key: string]: string | string[] | undefined }; // Si vous utilisez searchParams
-};
-
 // Générer les métadonnées dynamiquement et localisées (reste côté serveur)
-export async function generateMetadata({
-  params: paramsPromise,
-}: LocalePageProps) {
+export async function generateMetadata({ params: paramsPromise }) {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
   const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -26,7 +13,7 @@ export async function generateMetadata({
 }
 
 // La page est maintenant un Server Component
-export default async function Home({ params: paramsPromise }: LocalePageProps) {
+export default async function Home({ params: paramsPromise }) {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
 

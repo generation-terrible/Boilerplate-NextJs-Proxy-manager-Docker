@@ -1,8 +1,7 @@
 import { auth } from "@/auth";
 import createIntlMiddleware from "next-intl/middleware";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { locales, defaultLocale, localePrefix } from "./i18n/routing";
-import { Session } from "next-auth";
 
 // Pages d'authentification (où un utilisateur authentifié ne devrait pas aller)
 const authPagePatterns = ["/login", "/register"];
@@ -10,7 +9,7 @@ const authPagePatterns = ["/login", "/register"];
 // Pour l'instant, nous considérons les pages d'authentification comme publiques
 // car le middleware auth gérera la redirection si l'utilisateur est déjà connecté.
 // Si vous avez d'autres pages purement publiques (ex: /about), ajoutez-les ici.
-const publicPagePatterns: string[] = [];
+const publicPagePatterns = [];
 
 const intlMiddleware = createIntlMiddleware({
   locales,
@@ -18,11 +17,7 @@ const intlMiddleware = createIntlMiddleware({
   localePrefix,
 });
 
-interface AuthenticatedRequest extends NextRequest {
-  auth?: Session | null;
-}
-
-export default auth((req: AuthenticatedRequest) => {
+export default auth((req) => {
   const { nextUrl } = req;
   const session = req.auth; // La session est disponible ici grâce au middleware `auth`
   const isLoggedIn = !!session;
@@ -58,7 +53,7 @@ export default auth((req: AuthenticatedRequest) => {
   // Pour toutes les autres requêtes (utilisateurs connectés sur des pages protégées,
   // utilisateurs non connectés sur des pages publiques/auth, routes API),
   // on applique simplement le middleware d'internationalisation.
-  return intlMiddleware(req as NextRequest);
+  return intlMiddleware(req);
 });
 
 export const config = {

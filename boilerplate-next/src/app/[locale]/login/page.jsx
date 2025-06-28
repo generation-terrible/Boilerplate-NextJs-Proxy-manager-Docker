@@ -2,18 +2,10 @@ import { getTranslations } from "next-intl/server";
 import { LoginForm } from "@/components/forms/LoginForm";
 import { Suspense } from "react"; // Pour Suspense autour de LoginForm si nécessaire avec useSearchParams
 
-// Définir un type pour les props de la page en accord avec Next.js
-type LocalePageProps = {
-  params: {
-    locale: string;
-  };
-  // searchParams sont disponibles ici si la page est un Server Component dynamique
-  searchParams?: { [key: string]: string | string[] | undefined };
-};
-
-export async function generateMetadata({ params }: LocalePageProps) {
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
   const t = await getTranslations({
-    locale: params.locale,
+    locale: resolvedParams.locale,
     namespace: "LoginPage",
   });
   return {
@@ -26,20 +18,14 @@ export async function generateMetadata({ params }: LocalePageProps) {
 // au lieu d'un rendu statique, sauf si enveloppé dans Suspense.
 // Cependant, LoginForm étant déjà "use client", Suspense ici est surtout pour la bonne pratique
 // si d'autres composants serveurs sur cette page dépendaient de searchParams.
-function LoginPageContent({
-  translations: pageTranslations,
-}: {
-  translations: any;
-}) {
+function LoginPageContent({ translations: pageTranslations }) {
   return <LoginForm translations={pageTranslations} />;
 }
 
-export default async function LoginPage({
-  params,
-  searchParams,
-}: LocalePageProps) {
+export default async function LoginPage({ params, searchParams }) {
+  const resolvedParams = await params;
   const t = await getTranslations({
-    locale: params.locale,
+    locale: resolvedParams.locale,
     namespace: "LoginPage",
   });
 

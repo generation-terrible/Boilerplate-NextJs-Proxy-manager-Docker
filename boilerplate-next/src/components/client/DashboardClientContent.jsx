@@ -1,30 +1,12 @@
 "use client";
 
 import { useSession } from "next-auth/react"; // Reste ici pour le status, mais les données de session initiales peuvent venir des props
-import type { Session } from "next-auth"; // Importer le type Session
 import { useTranslations } from "next-intl"; // Importer useTranslations
-
-interface DashboardPassedTranslations {
-  title: string;
-  loadingSession: string;
-  accessDenied: string;
-  guest: string;
-  emailLabel: string;
-  roleLabel: string;
-  adminRole: string;
-  userRole: string;
-  sessionInfoTitle: string;
-}
-
-interface DashboardClientContentProps {
-  translations: DashboardPassedTranslations; // Renommé pour refléter ce qui est réellement passé
-  initialSession: Session | null; // La session peut être null si non authentifié (géré par middleware avant)
-}
 
 export function DashboardClientContent({
   translations: passedT, // Renommer pour éviter confusion avec le t de useTranslations
   initialSession,
-}: DashboardClientContentProps) {
+}) {
   const t = useTranslations("DashboardPage"); // Hook pour les traductions dynamiques
   // Utiliser useSession pour le statut et les mises à jour, mais initialSession pour le premier rendu
   const { data: sessionFromHook, status } = useSession();
@@ -74,13 +56,11 @@ export function DashboardClientContent({
           </p>
         )}
 
-        {/* Typage pour isAdmin - Assurez-vous que votre type Session inclut isAdmin si vous l'utilisez */}
-        {typeof (session.user as any)?.isAdmin === "boolean" && (
+        {/* Vérification de isAdmin */}
+        {typeof session.user?.isAdmin === "boolean" && (
           <p className="mb-2">
             <span className="font-semibold">{passedT.roleLabel}:</span>
-            {(session.user as any).isAdmin
-              ? passedT.adminRole
-              : passedT.userRole}
+            {session.user.isAdmin ? passedT.adminRole : passedT.userRole}
           </p>
         )}
 

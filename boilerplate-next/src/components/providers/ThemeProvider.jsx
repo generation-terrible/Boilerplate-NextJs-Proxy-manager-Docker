@@ -1,17 +1,17 @@
 "use client";
 
 import { useEffect } from "react";
-import { useThemeStore, Theme } from "@/stores/theme.store";
+import { useThemeStore } from "@/stores/theme.store";
 
 // Ce mapping aide à traduire notre état de thème en classes CSS réelles.
-const themeClassMap: Record<Exclude<Theme, "system">, string> = {
+const themeClassMap = {
   light: "light", // ou vide si light est l'absence de .dark et de .theme-*
   dark: "dark",
   orange: "theme-orange",
   blue: "theme-blue",
 };
 
-export function ThemeProvider({ children }: { children: React.ReactNode }) {
+export function ThemeProvider({ children }) {
   const theme = useThemeStore((state) => state.theme);
 
   useEffect(() => {

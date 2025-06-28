@@ -4,22 +4,7 @@ import toast from "react-hot-toast";
 import { Button } from "@/components/ui/button";
 import { ThemeSwitcher } from "@/components/ThemeSwitcher";
 
-interface HomePageTranslations {
-  welcomeText: string;
-  descriptionText: string;
-  successToastMessage: string;
-  errorToastMessage: string;
-  showSuccessButtonText: string;
-  showErrorButtonText: string;
-}
-
-interface HomePageClientContentProps {
-  translations: HomePageTranslations;
-}
-
-export function HomePageClientContent({
-  translations: t,
-}: HomePageClientContentProps) {
+export function HomePageClientContent({ translations: t }) {
   const handleShowSuccessToast = () => {
     toast.success(t.successToastMessage);
   };

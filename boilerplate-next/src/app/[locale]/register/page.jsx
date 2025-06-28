@@ -1,18 +1,10 @@
 import { getTranslations } from "next-intl/server";
 import { RegisterForm } from "@/components/forms/RegisterForm";
 
-// Définir un type pour les props de la page en accord avec Next.js
-type LocalePageProps = {
-  params: {
-    locale: string;
-    // autres éventuels paramètres de route
-  };
-  // searchParams?: { [key: string]: string | string[] | undefined }; // Si vous utilisez searchParams
-};
-
-export async function generateMetadata({ params }: LocalePageProps) {
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
   const t = await getTranslations({
-    locale: params.locale,
+    locale: resolvedParams.locale,
     namespace: "RegisterPage",
   });
   return {
@@ -21,9 +13,10 @@ export async function generateMetadata({ params }: LocalePageProps) {
   };
 }
 
-export default async function RegisterPage({ params }: LocalePageProps) {
+export default async function RegisterPage({ params }) {
+  const resolvedParams = await params;
   const t = await getTranslations({
-    locale: params.locale,
+    locale: resolvedParams.locale,
     namespace: "RegisterPage",
   });
 
@@ -48,7 +41,7 @@ export default async function RegisterPage({ params }: LocalePageProps) {
     passwordsDoNotMatchError: t("passwordsDoNotMatch"),
     registrationErrorDefault: t("registrationError"),
     registrationSuccessMessage: t("registrationSuccess"),
-    networkErrorTemplate: (error: string) => t("networkError", { error }),
+    networkError: t("networkError"),
   };
 
   return <RegisterForm translations={allTranslations} />;

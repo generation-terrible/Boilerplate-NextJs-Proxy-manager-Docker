@@ -1,7 +1,6 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
 import bcryptjs from "bcryptjs";
-import type { Provider } from "next-auth/providers";
 
 export const credentialsProvider = CredentialsProvider({
   name: "Credentials",
@@ -19,8 +18,8 @@ export const credentialsProvider = CredentialsProvider({
       return null;
     }
 
-    const email = credentials.email as string;
-    const password = credentials.password as string;
+    const email = credentials.email;
+    const password = credentials.password;
 
     const user = await prisma.user.findUnique({
       where: { email: email },
@@ -45,7 +44,6 @@ export const credentialsProvider = CredentialsProvider({
       return null;
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const { passwordHash, ...userWithoutPasswordHash } = user;
     console.log(
       "Authentification réussie pour:",
@@ -56,6 +54,6 @@ export const credentialsProvider = CredentialsProvider({
 });
 
 // Si vous avez d'autres providers (Google, GitHub, etc.), ajoutez-les ici
-// export const otherProviders: Provider[] = [Google, GitHub];
+// export const otherProviders = [Google, GitHub];
 
-export const customProviders: Provider[] = [credentialsProvider];
+export const customProviders = [credentialsProvider];

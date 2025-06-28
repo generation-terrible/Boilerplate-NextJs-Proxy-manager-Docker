@@ -3,13 +3,7 @@
 import { useEffect } from "react";
 import { useTranslations } from "next-intl";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error & { digest?: string };
-  reset: () => void;
-}) {
+export default function Error({ error, reset }) {
   const t = useTranslations("ErrorPage"); // Créez des traductions pour ErrorPage
 
   useEffect(() => {

@@ -1,15 +1,17 @@
 import { NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { prisma } from "@/lib/prisma";
 
-// GET: Liste tous les utilisateurs
+// GET: récupère tous les utilisateurs (optionnel)
 export async function GET() {
-  const users = await prisma.user.findMany();
-  return NextResponse.json(users);
+  return NextResponse.json(
+    { message: "API utilisateur fonctionnelle" },
+    { status: 200 }
+  );
 }
 
 // POST: Ajoute un utilisateur admin
-export async function POST(request: Request) {
+export async function POST(request) {
   const data = await request.json();
   if (!data.email || !data.password || !data.acceptCgu) {
     return NextResponse.json(
@@ -17,7 +19,7 @@ export async function POST(request: Request) {
       { status: 400 }
     );
   }
-  const hashedPassword = await bcryptjs.hash(data.password, 10);
+  const hashedPassword = await bcrypt.hash(data.password, 10);
   const user = await prisma.user.create({
     data: {
       email: data.email,

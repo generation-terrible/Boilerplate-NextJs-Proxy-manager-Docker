@@ -43,7 +43,7 @@
     "passwordsDoNotMatch": "Les mots de passe ne correspondent pas.",
     "registrationError": "Erreur lors de l'inscription.",
     "registrationSuccess": "Inscription réussie ! Redirection...",
-    "networkError": "Erreur réseau ou serveur : {error}"
+    "networkError": "Erreur réseau ou serveur."
   },
   "LoginPage": {
     "formTitle": "Connexion",

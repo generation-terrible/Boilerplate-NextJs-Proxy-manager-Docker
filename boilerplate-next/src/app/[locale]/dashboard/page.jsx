@@ -2,17 +2,11 @@ import { getTranslations } from "next-intl/server";
 import { auth } from "@/auth"; // Importer auth depuis votre configuration
 import { DashboardClientContent } from "@/components/client/DashboardClientContent";
 import { redirect } from "next/navigation"; // Pour la redirection si non authentifié
-import type { Session } from "next-auth"; // Importer le type Session
 
-type LocalePageProps = {
-  params: {
-    locale: string;
-  };
-};
-
-export async function generateMetadata({ params }: LocalePageProps) {
+export async function generateMetadata({ params }) {
+  const resolvedParams = await params;
   const t = await getTranslations({
-    locale: params.locale,
+    locale: resolvedParams.locale,
     namespace: "DashboardPage",
   });
   // nous n'avons pas encore la session ici de manière simple. Gardons un titre générique.
@@ -21,9 +15,10 @@ export async function generateMetadata({ params }: LocalePageProps) {
   };
 }
 
-export default async function DashboardPage({ params }: LocalePageProps) {
+export default async function DashboardPage({ params }) {
   const session = await auth(); // Utiliser auth() pour récupérer la session
-  const locale = params.locale;
+  const resolvedParams = await params;
+  const locale = resolvedParams.locale;
 
   // Si aucune session, rediriger vers login (le middleware devrait déjà le faire, mais c'est une double sécurité)
   if (!session) {
@@ -50,7 +45,7 @@ export default async function DashboardPage({ params }: LocalePageProps) {
   return (
     <DashboardClientContent
       translations={translationsForClient} // Ne contient plus welcomeMessage(Template)
-      initialSession={session as Session} // Passer la session (typée) au composant client
+      initialSession={session} // Passer la session au composant client
     />
   );
 }

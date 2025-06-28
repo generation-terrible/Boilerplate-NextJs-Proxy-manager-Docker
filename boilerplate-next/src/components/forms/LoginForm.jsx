@@ -4,40 +4,19 @@ import { useState, useEffect } from "react";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-interface LoginFormTranslations {
-  formTitle: string;
-  emailLabel: string;
-  emailPlaceholder: string;
-  passwordLabel: string;
-  passwordPlaceholder: string;
-  submitButtonText: string;
-  submitButtonLoadingText: string;
-  emailAndPasswordRequiredError: string;
-  invalidCredentialsError: string;
-  loginFailedUnexpectedlyError: string;
-  networkOrServerError: string;
-  noAccountYetText: string;
-  registerLinkText: string;
-  loadingSessionText: string;
-}
-
-interface LoginFormProps {
-  translations: LoginFormTranslations;
-}
-
-export function LoginForm({ translations: t }: LoginFormProps) {
+export function LoginForm({ translations: t }) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { data: session, status } = useSession();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
   const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
     setLoading(true);

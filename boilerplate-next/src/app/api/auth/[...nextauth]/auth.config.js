@@ -1,10 +1,9 @@
-import type { NextAuthConfig } from "next-auth";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import { customProviders } from "./providers.config";
 
 // Configuration de base pour NextAuth.js v5
-export const authConfig: NextAuthConfig = {
+export const authConfig = {
   adapter: PrismaAdapter(prisma),
   providers: customProviders,
   session: {
@@ -23,8 +22,8 @@ export const authConfig: NextAuthConfig = {
     },
     async session({ session, token }) {
       if (session.user) {
-        session.user.id = token.id as string;
-        session.user.isAdmin = token.isAdmin as boolean | undefined;
+        session.user.id = token.id;
+        session.user.isAdmin = token.isAdmin;
       }
       return session;
     },

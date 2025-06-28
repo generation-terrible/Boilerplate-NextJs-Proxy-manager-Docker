@@ -18,21 +18,10 @@ export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
-// Définir un type pour les props du layout en accord avec Next.js 15
-type LayoutParams = Promise<{
-  locale: string;
-  [key: string]: string | string[] | undefined;
-}>;
-
-type RootLayoutProps = {
-  children: React.ReactNode;
-  params: LayoutParams;
-};
-
 export default async function RootLayout({
   children,
   params: paramsPromise, // params est maintenant une promesse
-}: RootLayoutProps) {
+}) {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
 

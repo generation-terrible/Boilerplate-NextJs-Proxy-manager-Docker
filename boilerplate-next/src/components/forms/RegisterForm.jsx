@@ -2,39 +2,11 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 import Link from "next/link";
 
-// Type pour l'objet de traductions
-interface RegisterFormTranslations {
-  formTitle: string;
-  nameLabel: string;
-  namePlaceholder: string;
-  emailLabel: string;
-  emailPlaceholder: string;
-  passwordLabel: string;
-  passwordPlaceholder: string;
-  confirmPasswordLabel: string;
-  showPasswordText: string;
-  hidePasswordText: string;
-  acceptTermsPrefix: string;
-  termsAndConditionsLinkText: string;
-  submitButtonText: string;
-  submitButtonLoadingText: string;
-  alreadyHaveAccountText: string;
-  loginLinkText: string;
-  allFieldsRequiredError: string;
-  passwordsDoNotMatchError: string;
-  registrationErrorDefault: string;
-  registrationSuccessMessage: string;
-  networkErrorTemplate: (error: string) => string;
-}
-
-// Interface pour les props du composant
-interface RegisterFormProps {
-  translations: RegisterFormTranslations;
-}
-
-export function RegisterForm({ translations: t }: RegisterFormProps) {
+// RegisterForm component avec translations en props
+export function RegisterForm({ translations }) {
   // Destructure translations as t for convenience
   const router = useRouter();
   const [form, setForm] = useState({
@@ -49,7 +21,7 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
   const [success, setSuccess] = useState("");
   const [loading, setLoading] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => ({
       ...prev,
@@ -57,7 +29,7 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
     setSuccess("");
@@ -67,11 +39,11 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
       !form.confirmPassword ||
       !form.acceptCgu
     ) {
-      setError(t.allFieldsRequiredError);
+      setError(translations.allFieldsRequiredError);
       return;
     }
     if (form.password !== form.confirmPassword) {
-      setError(t.passwordsDoNotMatchError);
+      setError(translations.passwordsDoNotMatchError);
       return;
     }
     setLoading(true);
@@ -88,13 +60,13 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
       });
       const data = await res.json();
       if (!res.ok) {
-        setError(data.error || t.registrationErrorDefault);
+        setError(data.error || translations.registrationErrorDefault);
       } else {
-        setSuccess(t.registrationSuccessMessage);
+        setSuccess(translations.registrationSuccessMessage);
         setTimeout(() => router.push("/login"), 1500);
       }
     } catch (err) {
-      setError(t.networkErrorTemplate(String(err)));
+      setError(translations.networkError || String(err));
     } finally {
       setLoading(false);
     }
@@ -106,7 +78,9 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
         onSubmit={handleSubmit}
         className="bg-card shadow-lg rounded-lg p-8 w-full max-w-md space-y-6 border border-border"
       >
-        <h2 className="text-2xl font-bold text-center mb-2">{t.formTitle}</h2>
+        <h2 className="text-2xl font-bold text-center mb-2">
+          {translations.formTitle}
+        </h2>
         {error && (
           <div className="text-red-600 text-sm text-center">{error}</div>
         )}
@@ -115,7 +89,7 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
         )}
         <div className="space-y-2">
           <label className="block text-sm font-medium" htmlFor="name">
-            {t.nameLabel}
+            {translations.nameLabel}
           </label>
           <input
             className="w-full px-3 py-2 border rounded-md bg-background border-input focus:outline-none focus:ring-2 focus:ring-primary"
@@ -125,12 +99,12 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             autoComplete="name"
             value={form.name}
             onChange={handleChange}
-            placeholder={t.namePlaceholder}
+            placeholder={translations.namePlaceholder}
           />
         </div>
         <div className="space-y-2">
           <label className="block text-sm font-medium" htmlFor="email">
-            {t.emailLabel}
+            {translations.emailLabel}
           </label>
           <input
             className="w-full px-3 py-2 border rounded-md bg-background border-input focus:outline-none focus:ring-2 focus:ring-primary"
@@ -141,12 +115,12 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             value={form.email}
             onChange={handleChange}
             required
-            placeholder={t.emailPlaceholder}
+            placeholder={translations.emailPlaceholder}
           />
         </div>
         <div className="space-y-2 relative">
           <label className="block text-sm font-medium" htmlFor="password">
-            {t.passwordLabel}
+            {translations.passwordLabel}
           </label>
           <input
             className="w-full px-3 py-2 border rounded-md bg-background border-input focus:outline-none focus:ring-2 focus:ring-primary pr-10"
@@ -157,7 +131,7 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             value={form.password}
             onChange={handleChange}
             required
-            placeholder={t.passwordPlaceholder}
+            placeholder={translations.passwordPlaceholder}
           />
           <button
             type="button"
@@ -165,7 +139,9 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             tabIndex={-1}
             onClick={() => setShowPassword((v) => !v)}
           >
-            {showPassword ? t.hidePasswordText : t.showPasswordText}
+            {showPassword
+              ? translations.hidePasswordText
+              : translations.showPasswordText}
           </button>
         </div>
         <div className="space-y-2">
@@ -173,7 +149,7 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             className="block text-sm font-medium"
             htmlFor="confirmPassword"
           >
-            {t.confirmPasswordLabel}
+            {translations.confirmPasswordLabel}
           </label>
           <input
             className="w-full px-3 py-2 border rounded-md bg-background border-input focus:outline-none focus:ring-2 focus:ring-primary"
@@ -184,7 +160,7 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             value={form.confirmPassword}
             onChange={handleChange}
             required
-            placeholder={t.passwordPlaceholder}
+            placeholder={translations.passwordPlaceholder}
           />
         </div>
         <div className="flex items-center space-x-2">
@@ -198,10 +174,10 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
             required
           />
           <label htmlFor="acceptCgu" className="text-sm">
-            {t.acceptTermsPrefix}{" "}
-            <a href="#" className="underline text-primary">
-              {t.termsAndConditionsLinkText}
-            </a>
+            {translations.acceptTermsPrefix}{" "}
+            <Link href="/cgu" className="underline text-primary">
+              {translations.termsAndConditionsLinkText}
+            </Link>
           </label>
         </div>
         <button
@@ -209,12 +185,14 @@ export function RegisterForm({ translations: t }: RegisterFormProps) {
           className="w-full bg-primary text-primary-foreground py-2 rounded-md font-semibold hover:bg-primary/90 transition disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? t.submitButtonLoadingText : t.submitButtonText}
+          {loading
+            ? translations.submitButtonLoadingText
+            : translations.submitButtonText}
         </button>
         <div className="text-center text-sm mt-2">
-          {t.alreadyHaveAccountText}{" "}
+          {translations.alreadyHaveAccountText}{" "}
           <Link href="/login" className="underline text-primary">
-            {t.loginLinkText}
+            {translations.loginLinkText}
           </Link>
         </div>
       </form>

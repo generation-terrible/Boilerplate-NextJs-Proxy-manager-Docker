@@ -1,21 +1,15 @@
 "use client";
 
-import { useThemeStore, Theme } from "@/stores/theme.store";
+import { useThemeStore } from "@/stores/theme.store";
 import { Button } from "@/components/ui/button"; // En supposant que vous avez un composant Button de Shadcn/ui
 import { Monitor, Sun, Moon, Palette } from "lucide-react"; // Pour les icônes
 import { useTranslations } from "next-intl"; // Ajout
-
-interface ThemeOption {
-  value: Theme;
-  label: string;
-  icon?: React.ReactNode;
-}
 
 export function ThemeSwitcher() {
   const { theme, setTheme } = useThemeStore();
   const t = useTranslations("ThemeSwitcher"); // Ajout
 
-  const themeOptions: ThemeOption[] = [
+  const themeOptions = [
     { value: "light", label: t("light"), icon: <Sun className="w-4 h-4" /> },
     { value: "dark", label: t("dark"), icon: <Moon className="w-4 h-4" /> },
     {
