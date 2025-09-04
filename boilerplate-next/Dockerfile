@@ -7,8 +7,8 @@ RUN npm install -g pnpm
 # Set the working directory inside the container
 WORKDIR /app
 
-# Copier package.json et pnpm-lock.yaml
-COPY package.json ./
+# Copier package.json et pnpm-lock.yaml pour optimiser le cache
+COPY package.json pnpm-lock.yaml* ./
 
 # Installer les dépendances
 RUN pnpm install
@@ -19,12 +19,9 @@ COPY . .
 # Générer le client Prisma
 RUN pnpm exec prisma generate
 
-# Build de l'application Next.js
-RUN pnpm run build
-
 # Exposer le port de l'application Next.js
 EXPOSE 3000
 
-# Démarrer l'application Next.js
+# Démarrer l'application Next.js en mode développement
 CMD ["pnpm", "run", "dev"]
 

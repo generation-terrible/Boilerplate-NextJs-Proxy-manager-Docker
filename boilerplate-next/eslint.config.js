@@ -18,25 +18,44 @@ export default [
       "*.config.mjs",
     ],
   },
-  eslint.configs.recommended, // Règles recommandées par ESLint
-  nextPlugin.configs.recommended,
-  nextPlugin.configs["core-web-vitals"],
+  eslint.configs.recommended,
   {
-    // Configuration spécifique pour vos fichiers et règles personnalisées
     files: ["src/**/*.{js,jsx}", "tests/**/*.js"],
+    plugins: {
+      "@next/next": nextPlugin,
+    },
     rules: {
-      // Vos règles personnalisées ici :
+      ...nextPlugin.configs.recommended.rules,
+      ...nextPlugin.configs["core-web-vitals"].rules,
       "react/no-unescaped-entities": "off",
       "@next/next/no-page-custom-font": "off",
+      "no-unused-vars": ["warn", { 
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_"
+      }],
+      "no-undef": "off", // Désactiver car pose problème avec JSX et globals
     },
     languageOptions: {
+      ecmaVersion: 2022,
+      sourceType: "module",
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true
+        }
+      },
       globals: {
-        // Définir les globales si nécessaire
+        React: "readonly",
+        console: "readonly",
+        process: "readonly",
+        localStorage: "readonly",
+        FormData: "readonly",
+        URL: "readonly",
+        fetch: "readonly"
       },
     },
     settings: {
       react: {
-        version: "detect", // Détecte automatiquement la version de React
+        version: "detect",
       },
     },
   },
