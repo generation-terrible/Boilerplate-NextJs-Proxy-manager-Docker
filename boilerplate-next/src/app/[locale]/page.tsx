@@ -1,8 +1,13 @@
+import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { HomePageClientContent } from "@/components/client/HomePageClientContent";
 
+interface PageProps {
+  params: Promise<{ locale: string }>;
+}
+
 // Générer les métadonnées dynamiquement et localisées (reste côté serveur)
-export async function generateMetadata({ params: paramsPromise }) {
+export async function generateMetadata({ params: paramsPromise }: PageProps): Promise<Metadata> {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
   const t = await getTranslations({ locale, namespace: "HomePage" });
@@ -13,7 +18,7 @@ export async function generateMetadata({ params: paramsPromise }) {
 }
 
 // La page est maintenant un Server Component
-export default async function Home({ params: paramsPromise }) {
+export default async function Home({ params: paramsPromise }: PageProps) {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
 

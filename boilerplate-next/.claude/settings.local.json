@@ -26,7 +26,9 @@
       "Bash(npm install:*)",
       "Read(//private/var/folders/ll/kzp03wmx475b6fg3b81z0y8h0000gn/T/create-saas-app-cache/boilerplate-master/**)",
       "Read(//Users/yannberlingeri/Desktop/Boilerplate-Docker-Next/**)",
-      "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)"
+      "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)",
+      "Bash(npm update)",
+      "Bash(npm audit:*)"
     ],
     "deny": [],
     "ask": []

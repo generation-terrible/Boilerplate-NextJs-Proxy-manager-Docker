@@ -1,4 +1,4 @@
-// import type { Metadata } from "next"; // Supprimé car non utilisé
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./global.css";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
@@ -13,15 +13,28 @@ import { Toaster } from "react-hot-toast";
 
 const inter = Inter({ subsets: ["latin"] });
 
+export const metadata: Metadata = {
+  title: {
+    template: "%s | SaaS Boilerplate",
+    default: "SaaS Boilerplate - Next.js 15 with Authentication",
+  },
+  description: "Production-ready SaaS boilerplate with Next.js 15, TypeScript, Authentication, and more",
+};
+
 // Permet à Next.js de connaître les locales supportées pour la génération statique
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
 }
 
+interface RootLayoutProps {
+  children: React.ReactNode;
+  params: Promise<{ locale: string }>;
+}
+
 export default async function RootLayout({
   children,
-  params: paramsPromise, // params est maintenant une promesse
-}) {
+  params: paramsPromise,
+}: RootLayoutProps) {
   const awaitedParams = await paramsPromise;
   const locale = awaitedParams.locale;
 
