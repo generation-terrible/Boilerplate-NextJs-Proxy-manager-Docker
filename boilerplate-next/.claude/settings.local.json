@@ -22,7 +22,11 @@
       "WebFetch(domain:next-intl.dev)",
       "Read(//tmp/test-saas-intl/src/i18n/**)",
       "Read(//tmp/test-saas-intl/**)",
-      "Bash(npx prisma:*)"
+      "Bash(npx prisma:*)",
+      "Bash(npm install:*)",
+      "Read(//private/var/folders/ll/kzp03wmx475b6fg3b81z0y8h0000gn/T/create-saas-app-cache/boilerplate-master/**)",
+      "Read(//Users/yannberlingeri/Desktop/Boilerplate-Docker-Next/**)",
+      "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)"
     ],
     "deny": [],
     "ask": []
