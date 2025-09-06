@@ -1,145 +1,302 @@
-# Boilerplate Next.js "Production Ready"
+# 🚀 SaaS Boilerplate - Next.js 15 TypeScript
 
-Ce projet est un boilerplate Next.js conçu pour être "production ready", intégrant les meilleures pratiques et une stack technologique moderne.
+> Production-ready SaaS boilerplate built with Next.js 15, TypeScript, and modern web technologies.
 
-## ✨ Fonctionnalités Principales
+A comprehensive, full-stack boilerplate designed for rapid SaaS application development. Features authentication, internationalization, database management, and Docker containerization out of the box.
 
-- **Framework Full-Stack**: [Next.js](https://nextjs.org/) (App Router)
-- **Langage**: [TypeScript](https://www.typescriptlang.org/)
-- **Base de Données**: [PostgreSQL](https://www.postgresql.org/) (via Docker)
-- **ORM**: [Prisma](https://www.prisma.io/)
-- **Authentification**: [NextAuth.js](https://next-auth.js.org/)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/) (avec thèmes multiples pré-configurés)
-- **Internationalisation (i18n)**: [next-intl](https://next-intl-docs.vercel.app/) (routage basé sur la locale, fichiers JSON)
-- **Gestion des Formulaires**: [React Hook Form](https://react-hook-form.com/) & [Zod](https://zod.dev/) (pour la validation)
-- **Server Actions**: Pour une logique backend moderne et intégrée.
-- **Tests**:
-  - Unitaires/Composants: [Vitest](https://vitest.dev/) & [React Testing Library](https://testing-library.com/docs/react-testing-library/intro/)
-  - End-to-End (E2E): [Playwright](https://playwright.dev/) (avec configuration Docker dédiée)
-- **Linting & Formatting**: [ESLint](https://eslint.org/) (avec la nouvelle "flat config") et Prettier (implicitement via les standards Next.js)
-- **Containerisation**: [Docker](https://www.docker.com/) & Docker Compose pour les environnements de développement et de production.
-- **Gestionnaire de Paquets**: [pnpm](https://pnpm.io/)
+## ✨ Features
 
-## 🚀 Démarrage Rapide
+### Core Framework
+- 🚀 **Next.js 15** - Latest App Router with Server Components
+- 🏷️ **TypeScript** - Full type safety across the codebase
+- 🐘 **PostgreSQL** - Robust database with Docker containerization
+- 🔄 **Prisma ORM** - Type-safe database operations
 
-Suivez ces étapes pour mettre en place et lancer le projet localement.
+### Authentication & Security
+- 🔐 **NextAuth.js v5** - Complete authentication solution
+- 🛡️ **Server Actions** - Secure server-side operations
+- 🔑 **JWT & Session Management** - Flexible auth strategies
 
-### Prérequis
+### UI/UX & Styling
+- 🎨 **Tailwind CSS v3** - Utility-first styling
+- 🌙 **Multi-theme Support** - Dark/light mode ready
+- 📱 **Responsive Design** - Mobile-first approach
+- 🎯 **shadcn/ui Components** - Modern UI component library
 
-- [Node.js](https://nodejs.org/) (version 18.x ou supérieure recommandée)
-- [pnpm](https://pnpm.io/installation)
-- [Docker](https://www.docker.com/get-started/) et Docker Compose
+### Internationalization
+- 🌍 **next-intl v4** - Complete i18n solution
+- 🚦 **Locale-based Routing** - `/en`, `/fr` route structure
+- 📄 **JSON Translation Files** - Easy content management
 
-### Étapes d'installation
+### Forms & Validation
+- 📋 **React Hook Form** - Performant form handling
+- ✅ **Zod Validation** - Runtime type validation
+- 🎯 **Type-safe Forms** - End-to-end type safety
 
-1.  **Cloner le dépôt** (si ce n'est pas déjà fait) :
+### Testing & Quality
+- 🧪 **Vitest** - Fast unit testing framework
+- 🎭 **Playwright** - End-to-end testing suite
+- 🔍 **ESLint** - Code linting with flat config
+- 📏 **TypeScript Strict Mode** - Maximum type safety
 
-    ```bash
-    git clone <URL_DU_DEPOT_GIT>
-    cd boilerplate-next
-    ```
+### DevOps & Deployment
+- 🐳 **Docker & Docker Compose** - Complete containerization
+- 📦 **pnpm** - Fast, efficient package management
+- 🔄 **Hot Reload** - Development experience
+- 🚀 **Production Ready** - Optimized builds
 
-2.  **Copier les variables d'environnement** :
-    Créez un fichier `.env` à la racine du projet en copiant `.env.example` (si vous en créez un, sinon listez les variables nécessaires ici) :
+## 🚀 Quick Start
 
-    ```bash
-    cp .env.example .env # Si .env.example existe
-    ```
+### Prerequisites
 
-    Assurez-vous de configurer les variables nécessaires, notamment `DATABASE_URL` (qui est généralement gérée par Docker Compose mais peut être surchargée) et les secrets pour `NextAuth.js`.
+- **Node.js** 18.x or higher ([Download](https://nodejs.org/))
+- **pnpm** ([Installation Guide](https://pnpm.io/installation))
+- **Docker & Docker Compose** ([Get Started](https://www.docker.com/get-started/))
 
-    Exemple de `DATABASE_URL` pour Docker (généralement dans `.env` ou directement dans `docker-compose.yml`) :
-    `DATABASE_URL="postgresql://user:password@postgres:5432/mydb?schema=public"`
+### Installation
 
-3.  **Installer les dépendances** (si vous souhaitez les avoir localement en plus de Docker, sinon cette étape est gérée dans l'image Docker) :
+#### Option 1: Using create-saas-app CLI (Recommended)
 
-    ```bash
-    pnpm install
-    ```
+```bash
+npx create-saas-app@latest my-saas-app
+cd my-saas-app
+```
 
-4.  **Lancer les services avec Docker Compose** :
-    Cette commande va construire les images (si nécessaire) et démarrer les conteneurs (application Next.js, base de données PostgreSQL, service Playwright).
+#### Option 2: Manual Installation
 
-    ```bash
-    docker compose up -d --build
-    ```
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/generation-terrible/Boilerplate-NextJs-Proxy-manager-Docker.git
+   cd Boilerplate-NextJs-Proxy-manager-Docker/boilerplate-next
+   ```
 
-5.  **Exécuter les migrations Prisma** :
-    Une fois que le conteneur PostgreSQL est prêt, exécutez les migrations pour créer le schéma de base de données. Cela doit être fait _à l'intérieur_ du conteneur de l'application Next.js.
+2. **Environment Configuration**
+   ```bash
+   cp .env.example .env
+   ```
+   
+   Configure your environment variables:
+   ```env
+   # Database
+   DATABASE_URL="postgresql://user:password@postgres:5432/mydb?schema=public"
+   
+   # NextAuth.js
+   NEXTAUTH_SECRET="your-secret-key"
+   NEXTAUTH_URL="http://localhost:3000"
+   
+   # App Configuration
+   APP_URL="http://localhost:3000"
+   ```
 
-    ```bash
-    docker compose exec nextjs pnpm prisma migrate dev
-    ```
+3. **Start with Docker (Recommended)**
+   ```bash
+   # Build and start all services
+   docker compose up -d --build
+   
+   # Setup database (run once)
+   npm run docker:setup
+   ```
 
-    Si vous avez déjà fait un `migrate deploy` dans votre script `start`, vous pourriez aussi avoir besoin de `prisma generate` si des changements ont été faits au schéma :
+4. **Alternative: Local Development**
+   ```bash
+   # Install dependencies
+   pnpm install
+   
+   # Setup database
+   pnpm prisma migrate dev
+   pnpm prisma generate
+   
+   # Start development server
+   pnpm dev
+   ```
 
-    ```bash
-    docker compose exec nextjs pnpm prisma generate
-    ```
+5. **Access the application**
+   Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-6.  **Accéder à l'application** :
-    Ouvrez votre navigateur et allez sur [http://localhost:3000](http://localhost:3000).
+## 📋 Available Commands
 
-### Autres commandes utiles
+### Docker Commands
+```bash
+# Start all services
+docker compose up -d --build
 
-- **Arrêter les services Docker** :
-  ```bash
-  docker compose down
-  ```
-- **Voir les logs d'un service (ex: nextjs)** :
-  ```bash
-  docker compose logs -f nextjs
-  ```
-- **Lancer les tests unitaires/composants** :
-  Exécutez cela dans le conteneur `nextjs` ou localement si les dépendances sont installées.
-  ```bash
-  docker compose exec nextjs pnpm test
-  # ou localement
-  # pnpm test
-  ```
-- **Lancer les tests E2E Playwright** :
-  ```bash
-  docker compose exec playwright pnpm test:e2e
-  ```
-- **Voir le rapport des tests E2E** (après exécution des tests) :
-  Assurez-vous que le port 9323 est mappé dans `docker-compose.yml` pour le service `playwright`.
+# Stop all services
+docker compose down
 
-  ```bash
-  docker compose exec playwright pnpm test:e2e:report
-  ```
+# View logs
+docker compose logs -f nextjs
 
-  Puis accédez à [http://localhost:9323](http://localhost:9323).
+# Setup database (initial setup)
+npm run docker:setup
 
-- **Accéder à Prisma Studio** (pour visualiser/gérer votre base de données) :
-  Assurez-vous que le port 5555 est mappé dans `docker-compose.yml` pour le service `nextjs` et que le script pour lancer Prisma Studio est disponible.
-  Si vous avez un script comme `prisma:studio`: `prisma studio --port 5555` dans `package.json`:
+# Database operations
+npm run docker:db:migrate
+npm run docker:db:reset
+npm run docker:db:seed
+```
 
-  ```bash
-  docker compose exec nextjs pnpm prisma:studio # Adaptez si le script a un autre nom
-  ```
+### Development Commands
+```bash
+# Install dependencies
+pnpm install
 
-  Puis accédez à [http://localhost:5555](http://localhost:5555).
+# Development server
+pnpm dev
 
-- **Linting** :
-  ```bash
-  docker compose exec nextjs pnpm lint
-  # ou localement
-  # pnpm lint
-  ```
+# Build for production
+pnpm build
 
-## 📁 Structure des Dossiers Clés
+# Start production server
+pnpm start
 
-- `messages/`: Fichiers de traduction JSON pour `next-intl`.
-- `prisma/`: Schéma (`schema.prisma`) et migrations de la base de données.
-- `public/`: Assets statiques.
-- `scripts/`: Scripts utilitaires pour le projet.
-- `src/`: Code source de l'application.
-  - `actions/`: Server Actions de Next.js.
-  - `app/[locale]/`: Pages et layouts de l'App Router, structurés pour l'i18n.
-  - `components/`: Composants React (UI, formulaires, providers, etc.).
-  - `hooks/`: Hooks React personnalisés.
-  - `i18n/`: Configuration de `next-intl` (`routing.ts`, `request.ts`).
-  - `lib/`: Utilitaires partagés (ex: instance Prisma, schémas Zod).
-  - `middleware.ts`: Middleware Next.js (utilisé ici pour `next-intl`).
-  - `types/`: Définitions de types TypeScript personnalisées.
-- `tests/`: Tests End-to-End Playwright.
+# Type checking
+pnpm type-check
+
+# Linting
+pnpm lint
+pnpm lint:fix
+```
+
+### Database Commands
+```bash
+# Run migrations
+pnpm prisma migrate dev
+
+# Generate Prisma client
+pnpm prisma generate
+
+# Open Prisma Studio
+pnpm prisma studio
+
+# Reset database
+pnpm prisma migrate reset
+```
+
+### Testing Commands
+```bash
+# Run unit tests
+pnpm test
+
+# Run E2E tests
+pnpm test:e2e
+
+# View test report
+pnpm test:e2e:report
+```
+
+## 📁 Project Structure
+
+```
+boilerplate-next/
+├── messages/                 # i18n translation files
+│   ├── en.json
+│   └── fr.json
+├── prisma/                   # Database schema and migrations
+│   ├── schema.prisma
+│   ├── migrations/
+│   └── seed.ts
+├── public/                   # Static assets
+├── src/
+│   ├── actions/             # Next.js Server Actions
+│   ├── app/[locale]/        # App Router pages (i18n)
+│   │   ├── (auth)/         # Auth pages group
+│   │   ├── dashboard/      # Protected dashboard
+│   │   ├── globals.css     # Global styles
+│   │   ├── layout.tsx      # Root layout
+│   │   └── page.tsx        # Home page
+│   ├── components/         # React components
+│   │   ├── client/        # Client-side components
+│   │   ├── forms/         # Form components
+│   │   ├── providers/     # Context providers
+│   │   └── ui/           # shadcn/ui components
+│   ├── hooks/             # Custom React hooks
+│   ├── i18n/              # Internationalization config
+│   │   ├── request.ts     # Server-side i18n
+│   │   └── routing.ts     # i18n routing config
+│   ├── lib/               # Utility functions
+│   │   ├── auth.ts        # NextAuth configuration
+│   │   ├── db.ts          # Prisma client
+│   │   └── validations/   # Zod schemas
+│   ├── types/             # TypeScript definitions
+│   └── middleware.ts      # Next.js middleware
+├── tests/                  # E2E tests
+├── docker-compose.yml      # Docker services
+├── Dockerfile             # Application container
+└── package.json           # Dependencies and scripts
+```
+
+## 🔧 Configuration
+
+### Environment Variables
+
+| Variable | Description | Default |
+|----------|-------------|---------|
+| `DATABASE_URL` | PostgreSQL connection string | `postgresql://user:password@postgres:5432/mydb` |
+| `NEXTAUTH_SECRET` | NextAuth.js secret key | Required |
+| `NEXTAUTH_URL` | Application URL | `http://localhost:3000` |
+| `APP_URL` | Public application URL | `http://localhost:3000` |
+
+### Database Schema
+
+The boilerplate includes a basic user management schema:
+- User authentication with NextAuth.js
+- Session management
+- Extensible user profile structure
+
+### Internationalization
+
+Supported locales:
+- 🇺🇸 English (`en`)
+- 🇫🇷 French (`fr`)
+
+Routes are automatically prefixed with locale (`/en/dashboard`, `/fr/dashboard`).
+
+## 🚀 Deployment
+
+### Docker Production
+
+```bash
+# Build production image
+docker build -t my-saas-app .
+
+# Run with docker-compose
+docker compose -f docker-compose.prod.yml up -d
+```
+
+### Manual Deployment
+
+```bash
+# Build the application
+pnpm build
+
+# Start production server
+pnpm start
+```
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## 🎯 Next Steps
+
+After setting up the boilerplate, consider:
+
+- [ ] Customizing the authentication providers in `src/lib/auth.ts`
+- [ ] Adding your business logic in `src/actions/`
+- [ ] Extending the database schema in `prisma/schema.prisma`
+- [ ] Adding more translations in `messages/`
+- [ ] Implementing your UI components
+- [ ] Setting up CI/CD pipelines
+- [ ] Configuring production environment variables
+
+---
+
+**Built with ❤️ using Next.js 15 and TypeScript**
