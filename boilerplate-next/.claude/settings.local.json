@@ -28,7 +28,12 @@
       "Read(//Users/yannberlingeri/Desktop/Boilerplate-Docker-Next/**)",
       "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)",
       "Bash(npm update)",
-      "Bash(npm audit:*)"
+      "Bash(npm audit:*)",
+      "Bash(npx:*)",
+      "Bash(npm run docker:setup:*)",
+      "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js my-saas-app-test --typescript --docker)",
+      "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js auth-test --typescript --docker)",
+      "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js cli-test-final --typescript --docker)"
     ],
     "deny": [],
     "ask": []

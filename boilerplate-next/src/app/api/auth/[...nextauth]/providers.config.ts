@@ -1,6 +1,7 @@
 import CredentialsProvider from "next-auth/providers/credentials";
 import prisma from "@/lib/prisma";
-import bcryptjs from "bcryptjs";
+// Utilisation d'un import compatible avec Edge Runtime
+const bcryptjs = require('bcryptjs');
 
 export const credentialsProvider = CredentialsProvider({
   name: "Credentials",

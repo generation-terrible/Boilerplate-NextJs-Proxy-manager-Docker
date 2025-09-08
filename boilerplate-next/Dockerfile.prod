@@ -21,6 +21,8 @@ FROM base AS builder
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
+# Utiliser la config de production optimisée
+RUN cp next.config.prod.mjs next.config.mjs
 
 # Set SITE_URL for sitemap generation (sera passé comme build-arg)
 ARG SITE_URL
@@ -44,7 +46,9 @@ RUN mkdir -p /app/.next/cache /app/public && \
 
 # Copier les fichiers nécessaires depuis le builder avec les bonnes permissions
 COPY --from=builder --chown=node:node /app/package.json ./package.json
-COPY --from=builder --chown=node:node /app/public ./public
+# Créer le répertoire public et copier les assets si ils existent
+RUN mkdir -p ./public
+COPY --from=builder --chown=node:node /app/public/ ./public/ || echo 'No public directory to copy'
 # Copier le contenu du dossier standalone directement dans /app
 COPY --from=builder --chown=node:node /app/.next/standalone/./ .
 COPY --from=builder --chown=node:node /app/.next/static ./.next/static

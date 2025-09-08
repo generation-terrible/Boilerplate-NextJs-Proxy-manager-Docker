@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)",
+      "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)",
+      "Read(//Users/yannberlingeri/Desktop/create-saas-app-standalone/**)",
+      "Bash(npm run build:*)",
+      "Bash(node:*)",
+      "Bash(docker-compose:*)",
+      "Bash(docker compose:*)",
+      "Bash(docker rm:*)",
+      "Bash(curl:*)",
+      "Bash(docker network:*)",
+      "Bash(export PROXY_NETWORK_NAME=test-app-proxy)",
+      "Bash(env)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

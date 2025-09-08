@@ -1,5 +1,3 @@
-version: "3.8"
-
 services:
   nextjs:
     build:
@@ -12,6 +10,8 @@ services:
       - "${APP_PORT:-3000}:3000"
     networks:
       - ${PROXY_NETWORK_NAME:?err_proxy_network_not_defined}
+    depends_on:
+      - postgres
     environment:
       - APP_URL=${APP_URL}
       - DATABASE_URL=${DATABASE_URL}
@@ -20,25 +20,23 @@ services:
       - DEFAULT_EMAIL=${DEFAULT_EMAIL:-noreply@example.com}
     user: "node"
 
-  # Décommentez et configurez ce service si vous gérez PostgreSQL via Docker Compose
-  # postgres:
-  #   image: postgres:15-alpine
-  #   container_name: ${POSTGRES_CONTAINER_NAME:-boilerplate-postgres-prod}
-  #   environment:
-  #     POSTGRES_USER: ${POSTGRES_USER:?err_pg_user_not_defined}
-  #     POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?err_pg_password_not_defined}
-  #     POSTGRES_DB: ${POSTGRES_DB:?err_pg_db_not_defined}
-  #   volumes:
-  #     - postgres_data:/var/lib/postgresql/data
-  #   ports:
-  #     - "${POSTGRES_PORT:-5432}:5432" # Exposer uniquement si nécessaire (ex: accès direct pour debug)
-  #   networks:
-  #     - ${PROXY_NETWORK_NAME} # Ou un réseau interne dédié si Next.js y accède directement
-  #   restart: unless-stopped
+  postgres:
+    image: postgres:15-alpine
+    container_name: ${POSTGRES_CONTAINER_NAME:-boilerplate-postgres-prod}
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-password}
+      POSTGRES_DB: ${POSTGRES_DB:-mydb}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    networks:
+      - ${PROXY_NETWORK_NAME:?err_proxy_network_not_defined}
+    restart: unless-stopped
 
 networks:
   ${PROXY_NETWORK_NAME:?err_proxy_network_not_defined}:
     external: true
-# Décommentez si vous gérez PostgreSQL via Docker Compose et voulez un volume nommé
-# volumes:
-#   postgres_data:
+volumes:
+  postgres_data:
