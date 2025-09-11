@@ -10,6 +10,8 @@ const authPagePatterns = ["/login", "/register"];
 // car le middleware auth gérera la redirection si l'utilisateur est déjà connecté.
 // Si vous avez d'autres pages purement publiques (ex: /about), ajoutez-les ici.
 const publicPagePatterns = [];
+// Pages admin (nécessitent isAdmin = true)
+const adminPagePatterns = ["/admin"];
 
 const intlMiddleware = createIntlMiddleware({
   locales,
@@ -33,11 +35,21 @@ export default auth((req) => {
   const isPublicPage = publicPagePatterns.some((pattern) =>
     pathnameWithoutLocale.startsWith(pattern)
   );
+  const isAdminPage = adminPagePatterns.some((pattern) =>
+    pathnameWithoutLocale.startsWith(pattern)
+  );
   const isApiAuthRoute = nextUrl.pathname.startsWith("/api/auth"); // Pas de préfixe de locale pour les routes API
 
   // Si l'utilisateur est connecté et essaie d'accéder à une page d'authentification
   if (isLoggedIn && isAuthPage) {
     // Rediriger vers le dashboard avec la locale actuelle
+    const dashboardUrl = new URL(`/${locale}/dashboard`, nextUrl.origin);
+    return NextResponse.redirect(dashboardUrl);
+  }
+
+  // Si l'utilisateur essaie d'accéder à une page admin sans être admin
+  if (isLoggedIn && isAdminPage && !session?.user?.isAdmin) {
+    // Rediriger vers le dashboard normal avec la locale actuelle
     const dashboardUrl = new URL(`/${locale}/dashboard`, nextUrl.origin);
     return NextResponse.redirect(dashboardUrl);
   }
