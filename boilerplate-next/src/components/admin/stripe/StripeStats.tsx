@@ -1,42 +1,44 @@
 import { Suspense } from 'react';
+import { getTranslations } from 'next-intl/server';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { StripeAdminService } from '@/lib/stripe-admin';
 import { DollarSign, Users, CreditCard, TrendingDown } from 'lucide-react';
 
 async function StatsContent() {
   const stats = await StripeAdminService.getStats();
+  const t = await getTranslations('StripeAdmin.stats');
 
   const statCards = [
     {
-      title: 'Total Revenue',
+      title: t('totalRevenue'),
       value: `$${stats.totalRevenue.toLocaleString()}`,
       icon: DollarSign,
       change: '+12.5%',
       changeType: 'positive' as const
     },
     {
-      title: 'Monthly Revenue',
+      title: t('monthlyRevenue'),
       value: `$${stats.monthlyRevenue.toLocaleString()}`,
       icon: DollarSign,
       change: '+8.2%',
       changeType: 'positive' as const
     },
     {
-      title: 'Total Customers',
+      title: t('totalCustomers'),
       value: stats.totalCustomers.toLocaleString(),
       icon: Users,
       change: '+23',
       changeType: 'positive' as const
     },
     {
-      title: 'Active Subscriptions',
+      title: t('activeSubscriptions'),
       value: stats.totalSubscriptions.toLocaleString(),
       icon: CreditCard,
       change: '+5',
       changeType: 'positive' as const
     },
     {
-      title: 'Churn Rate',
+      title: t('churnRate'),
       value: `${stats.churnRate}%`,
       icon: TrendingDown,
       change: '-0.8%',
@@ -59,7 +61,7 @@ async function StatsContent() {
             <p className={`text-xs ${
               stat.changeType === 'positive' ? 'text-green-600' : 'text-red-600'
             }`}>
-              {stat.change} from last month
+              {stat.change} {t('fromLastMonth')}
             </p>
           </CardContent>
         </Card>

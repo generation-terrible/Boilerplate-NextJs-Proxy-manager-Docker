@@ -6,7 +6,7 @@ if (!process.env.STRIPE_SECRET_KEY) {
 
 // Instance Stripe pour l'admin (avec permissions étendues)
 export const stripeAdmin = new Stripe(process.env.STRIPE_SECRET_KEY, {
-  apiVersion: '2024-06-20',
+  apiVersion: '2024-12-18.acacia',
   typescript: true,
 });
 
@@ -82,7 +82,7 @@ export class StripeAdminService {
         churnRate: 5.2 // TODO: Calculer le vrai churn rate
       };
     } catch (error) {
-      console.error('Erreur récupération stats Stripe:', error);
+      console.error('Error fetching Stripe stats:', error);
       throw error;
     }
   }
@@ -108,7 +108,7 @@ export class StripeAdminService {
         description: charge.description || undefined
       }));
     } catch (error) {
-      console.error('Erreur récupération paiements:', error);
+      console.error('Error fetching payments:', error);
       throw error;
     }
   }
@@ -148,7 +148,7 @@ export class StripeAdminService {
 
       return customersWithStats;
     } catch (error) {
-      console.error('Erreur récupération clients:', error);
+      console.error('Error fetching customers:', error);
       throw error;
     }
   }
@@ -163,7 +163,7 @@ export class StripeAdminService {
         ? 'https://dashboard.stripe.com'
         : 'https://dashboard.stripe.com/test';
     } catch (error) {
-      console.error('Erreur création lien dashboard:', error);
+      console.error('Error creating dashboard link:', error);
       throw error;
     }
   }

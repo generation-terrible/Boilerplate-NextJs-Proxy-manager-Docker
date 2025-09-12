@@ -85,5 +85,59 @@
   "Toasts": {
     "successMessageDefault": "Operation successful!",
     "errorMessageDefault": "An error occurred."
+  },
+  "AdminPage": {
+    "title": "Administration",
+    "welcomeMessage": "Administration Panel",
+    "description": "Manage users, statistics and settings"
+  },
+  "StripeAdmin": {
+    "dashboardTitle": "Stripe Dashboard",
+    "dashboardDescription": "Manage payments, subscriptions and customers",
+    "stats": {
+      "totalRevenue": "Total Revenue",
+      "monthlyRevenue": "Monthly Revenue",
+      "totalCustomers": "Total Customers", 
+      "activeSubscriptions": "Active Subscriptions",
+      "churnRate": "Churn Rate",
+      "fromLastMonth": "from last month",
+      "loading": "Loading statistics..."
+    },
+    "recentPayments": {
+      "title": "Recent Payments",
+      "noPayments": "No recent payments found",
+      "noEmail": "No email",
+      "status": {
+        "succeeded": "Succeeded",
+        "pending": "Pending",
+        "failed": "Failed"
+      }
+    },
+    "quickActions": {
+      "title": "Quick Actions",
+      "viewCustomers": "View Customers",
+      "manageCustomers": "Manage customer accounts",
+      "subscriptions": "Subscriptions", 
+      "manageSubscriptions": "Manage subscriptions",
+      "paymentReports": "Payment Reports",
+      "viewAnalytics": "View payment analytics",
+      "webhookSettings": "Webhook Settings",
+      "configureWebhooks": "Configure webhooks",
+      "createCustomer": "+ Create New Customer",
+      "createCustomerSoon": "Create customer functionality coming soon!"
+    },
+    "externalLinks": {
+      "title": "External Links",
+      "stripeDashboard": "Stripe Dashboard",
+      "testPayments": "Test Payments", 
+      "customers": "Customers"
+    },
+    "errors": {
+      "fetchingStats": "Error fetching Stripe stats",
+      "fetchingPayments": "Error fetching payments",
+      "fetchingCustomers": "Error fetching customers",
+      "creatingCustomer": "Error creating customer",
+      "webhookFailed": "Webhook handler failed"
+    }
   }
 }

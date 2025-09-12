@@ -188,6 +188,10 @@ pnpm test:e2e:report
 
 ```
 boilerplate-next/
+├── docs/                     # Project documentation
+│   ├── STRIPE_SETUP.md      # Stripe integration guide
+│   ├── GOOGLE_OAUTH_SETUP.md # Google OAuth configuration
+│   └── SAAS_ROADMAP.md      # SaaS feature roadmap
 ├── messages/                 # i18n translation files
 │   ├── en.json
 │   └── fr.json
@@ -285,10 +289,20 @@ pnpm start
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
+## 📚 Documentation
+
+Detailed setup guides are available in the `docs/` folder:
+
+- **[Stripe Setup](docs/STRIPE_SETUP.md)** - Complete Stripe integration guide
+- **[Google OAuth Setup](docs/GOOGLE_OAUTH_SETUP.md)** - Google authentication configuration
+- **[SaaS Roadmap](docs/SAAS_ROADMAP.md)** - Feature development roadmap
+
 ## 🎯 Next Steps
 
 After setting up the boilerplate, consider:
 
+- [ ] Following the [Stripe Setup Guide](docs/STRIPE_SETUP.md) for payment integration
+- [ ] Configuring Google OAuth using [Google OAuth Setup](docs/GOOGLE_OAUTH_SETUP.md)
 - [ ] Customizing the authentication providers in `src/lib/auth.ts`
 - [ ] Adding your business logic in `src/actions/`
 - [ ] Extending the database schema in `prisma/schema.prisma`

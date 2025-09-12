@@ -1,15 +1,18 @@
 import { Suspense } from 'react';
+import { getTranslations } from 'next-intl/server';
 import { StripeAdminService, AdminPayment } from '@/lib/stripe-admin';
 import { Badge } from '@/components/ui/badge';
 import { formatDistanceToNow } from 'date-fns';
+import { fr } from 'date-fns/locale';
 
 async function PaymentsContent() {
   const payments = await StripeAdminService.getRecentPayments(10);
+  const t = await getTranslations('StripeAdmin.recentPayments');
 
   if (payments.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500">
-        No recent payments found
+        {t('noPayments')}
       </div>
     );
   }
@@ -28,7 +31,7 @@ async function PaymentsContent() {
                   {payment.currency} {payment.amount.toFixed(2)}
                 </p>
                 <p className="text-sm text-gray-600">
-                  {payment.customerEmail || 'No email'}
+                  {payment.customerEmail || t('noEmail')}
                 </p>
               </div>
             </div>
@@ -46,7 +49,7 @@ async function PaymentsContent() {
                 payment.status === 'pending' ? 'secondary' : 'destructive'
               }
             >
-              {payment.status}
+              {t(`status.${payment.status}`) || payment.status}
             </Badge>
             <p className="text-sm text-gray-500 mt-1">
               {formatDistanceToNow(new Date(payment.createdAt * 1000), { 

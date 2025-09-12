@@ -1,33 +1,34 @@
 'use client';
 
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { ExternalLink, Users, CreditCard, BarChart3, Settings } from 'lucide-react';
 
-const quickActions = [
+const getQuickActions = (t: any) => [
   {
-    title: 'View Customers',
-    description: 'Manage customer accounts',
+    title: t('viewCustomers'),
+    description: t('manageCustomers'),
     href: '/admin/stripe/customers',
     icon: Users,
     color: 'bg-blue-500'
   },
   {
-    title: 'Subscriptions',
-    description: 'Manage subscriptions',
+    title: t('subscriptions'),
+    description: t('manageSubscriptions'),
     href: '/admin/stripe/subscriptions',
     icon: CreditCard,
     color: 'bg-green-500'
   },
   {
-    title: 'Payment Reports',
-    description: 'View payment analytics',
+    title: t('paymentReports'),
+    description: t('viewAnalytics'),
     href: '/admin/stripe/reports',
     icon: BarChart3,
     color: 'bg-purple-500'
   },
   {
-    title: 'Webhook Settings',
-    description: 'Configure webhooks',
+    title: t('webhookSettings'),
+    description: t('configureWebhooks'),
     href: '/admin/stripe/webhooks',
     icon: Settings,
     color: 'bg-orange-500'
@@ -35,6 +36,9 @@ const quickActions = [
 ];
 
 export function StripeQuickActions() {
+  const t = useTranslations('StripeAdmin.quickActions');
+  const quickActions = getQuickActions(t);
+  
   return (
     <div className="space-y-3">
       {quickActions.map((action, index) => (
@@ -60,11 +64,11 @@ export function StripeQuickActions() {
           className="w-full p-3 border-2 border-dashed border-gray-300 rounded-lg text-center hover:border-gray-400 transition-colors"
           onClick={() => {
             // TODO: Implement create customer modal
-            alert('Create customer functionality coming soon!');
+            alert(t('createCustomerSoon'));
           }}
         >
           <div className="text-sm font-medium text-gray-600">
-            + Create New Customer
+            {t('createCustomer')}
           </div>
         </button>
       </div>

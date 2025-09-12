@@ -84,5 +84,59 @@
   "Toasts": {
     "successMessageDefault": "Opération réussie avec succès !",
     "errorMessageDefault": "Une erreur est survenue."
+  },
+  "AdminPage": {
+    "title": "Administration",
+    "welcomeMessage": "Panneau d'administration",
+    "description": "Gérer les utilisateurs, statistiques et paramètres"
+  },
+  "StripeAdmin": {
+    "dashboardTitle": "Tableau de Bord Stripe",
+    "dashboardDescription": "Gérer les paiements, abonnements et clients",
+    "stats": {
+      "totalRevenue": "Chiffre d'affaires total",
+      "monthlyRevenue": "Chiffre d'affaires mensuel", 
+      "totalCustomers": "Clients totaux",
+      "activeSubscriptions": "Abonnements actifs",
+      "churnRate": "Taux de résiliation",
+      "fromLastMonth": "par rapport au mois dernier",
+      "loading": "Chargement des statistiques..."
+    },
+    "recentPayments": {
+      "title": "Paiements récents",
+      "noPayments": "Aucun paiement récent trouvé",
+      "noEmail": "Pas d'email",
+      "status": {
+        "succeeded": "Réussi",
+        "pending": "En attente", 
+        "failed": "Échoué"
+      }
+    },
+    "quickActions": {
+      "title": "Actions rapides",
+      "viewCustomers": "Voir les clients",
+      "manageCustomers": "Gérer les comptes clients",
+      "subscriptions": "Abonnements",
+      "manageSubscriptions": "Gérer les abonnements",
+      "paymentReports": "Rapports de paiement",
+      "viewAnalytics": "Voir les analyses de paiement",
+      "webhookSettings": "Paramètres Webhooks",
+      "configureWebhooks": "Configurer les webhooks",
+      "createCustomer": "+ Créer un nouveau client",
+      "createCustomerSoon": "Fonctionnalité de création de client bientôt disponible !"
+    },
+    "externalLinks": {
+      "title": "Liens externes",
+      "stripeDashboard": "Tableau de Bord Stripe",
+      "testPayments": "Paiements de test",
+      "customers": "Clients"
+    },
+    "errors": {
+      "fetchingStats": "Erreur lors de la récupération des statistiques Stripe",
+      "fetchingPayments": "Erreur lors de la récupération des paiements",
+      "fetchingCustomers": "Erreur lors de la récupération des clients",
+      "creatingCustomer": "Erreur lors de la création du client",
+      "webhookFailed": "Échec du gestionnaire de webhook"
+    }
   }
 }
