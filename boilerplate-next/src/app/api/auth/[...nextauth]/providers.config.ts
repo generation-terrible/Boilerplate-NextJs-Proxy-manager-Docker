@@ -1,4 +1,5 @@
 import CredentialsProvider from "next-auth/providers/credentials";
+import GoogleProvider from "next-auth/providers/google";
 import prisma from "@/lib/prisma";
 // Utilisation d'un import compatible avec Edge Runtime
 const bcryptjs = require('bcryptjs');
@@ -54,7 +55,19 @@ export const credentialsProvider = CredentialsProvider({
   },
 });
 
-// Si vous avez d'autres providers (Google, GitHub, etc.), ajoutez-les ici
-// export const otherProviders = [Google, GitHub];
+export const googleProvider = GoogleProvider({
+  clientId: process.env.GOOGLE_CLIENT_ID!,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+  authorization: {
+    params: {
+      prompt: "consent",
+      access_type: "offline",
+      response_type: "code"
+    }
+  }
+});
 
-export const customProviders = [credentialsProvider];
+export const customProviders = [
+  credentialsProvider,
+  googleProvider
+];
