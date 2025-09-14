@@ -15,7 +15,7 @@
 /out/
 
 # claude
-/.claude
+
 .mcp.json
 
 # production

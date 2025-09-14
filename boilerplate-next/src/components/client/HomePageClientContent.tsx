@@ -1,40 +1,66 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import toast from "react-hot-toast";
-import { Button } from "@/components/ui/button";
-import { ThemeSwitcher } from "@/components/ThemeSwitcher";
+import { BusinessType } from "@/lib/templates";
+import { TemplateSwitcher } from "@/components/templates/TemplateSwitcher";
 
-export function HomePageClientContent({ translations: t }) {
-  const handleShowSuccessToast = () => {
-    toast.success(t.successToastMessage);
+// Import des templates
+import { WebAgencyHomepage } from "@/components/templates/business/WebAgencyHomepage";
+import { ElectricianHomepage } from "@/components/templates/business/ElectricianHomepage";
+import { CleaningHomepage } from "@/components/templates/business/CleaningHomepage";
+import { DefaultHomepage } from "@/components/templates/business/DefaultHomepage";
+
+const templateComponents = {
+  'web-agency': WebAgencyHomepage,
+  'electrician': ElectricianHomepage,
+  'cleaning': CleaningHomepage,
+  'default': DefaultHomepage,
+};
+
+interface HomePageClientContentProps {
+  translations: {
+    welcomeText: string;
+    descriptionText: string;
+    successToastMessage: string;
+    errorToastMessage: string;
+    showSuccessButtonText: string;
+    showErrorButtonText: string;
+  };
+}
+
+export function HomePageClientContent({ translations: t }: HomePageClientContentProps) {
+  const [currentTemplate, setCurrentTemplate] = useState<BusinessType>('default');
+
+  // Sauvegarder la préférence de template
+  useEffect(() => {
+    const saved = localStorage.getItem('homepage-template');
+    if (saved && saved in templateComponents) {
+      setCurrentTemplate(saved as BusinessType);
+    }
+  }, []);
+
+  const handleTemplateChange = (template: BusinessType) => {
+    setCurrentTemplate(template);
+    localStorage.setItem('homepage-template', template);
+    toast.success(`Template "${template}" activé !`);
   };
 
-  const handleShowErrorToast = () => {
-    toast.error(t.errorToastMessage);
-  };
+  // Récupérer le composant du template actuel
+  const TemplateComponent = templateComponents[currentTemplate];
 
   return (
-    <main className="flex flex-col items-center justify-center min-h-screen p-8">
-      <div className="w-full max-w-xl space-y-8">
-        <ThemeSwitcher />
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight sm:text-5xl md:text-6xl">
-            {t.welcomeText}
-          </h1>
-          <p className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl">
-            {t.descriptionText}
-          </p>
-        </div>
-
-        <div className="mt-8 flex flex-col sm:flex-row justify-center items-center gap-4">
-          <Button onClick={handleShowSuccessToast}>
-            {t.showSuccessButtonText}
-          </Button>
-          <Button onClick={handleShowErrorToast} variant="destructive">
-            {t.showErrorButtonText}
-          </Button>
-        </div>
-      </div>
-    </main>
+    <>
+      {/* Render du template sélectionné */}
+      <TemplateComponent />
+      
+      {/* Template Switcher (visible uniquement en dev) */}
+      {process.env.NODE_ENV === 'development' && (
+        <TemplateSwitcher
+          currentTemplate={currentTemplate}
+          onTemplateChange={handleTemplateChange}
+        />
+      )}
+    </>
   );
 }

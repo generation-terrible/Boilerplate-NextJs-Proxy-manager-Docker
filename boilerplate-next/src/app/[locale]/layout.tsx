@@ -69,27 +69,58 @@ export default async function RootLayout({
           <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider>
               <Toaster
-                position="top-right"
+                position="top-center"
                 toastOptions={{
-                  className: "",
-                  duration: 5000,
+                  className: "!bg-background !text-foreground !border-border",
+                  duration: 4000,
                   style: {
-                    background: "var(--background)",
-                    color: "var(--foreground)",
-                    border: "1px solid var(--border)",
+                    background: "hsl(var(--background))",
+                    color: "hsl(var(--foreground))",
+                    border: "1px solid hsl(var(--border))",
+                    borderRadius: "8px",
+                    boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+                    backdropFilter: "blur(8px)",
+                    fontSize: "14px",
+                    fontWeight: "500",
+                    padding: "12px 16px",
+                    minWidth: "300px",
+                    maxWidth: "500px",
                   },
                   success: {
                     duration: 3000,
+                    style: {
+                      background: "hsl(var(--background))",
+                      color: "hsl(var(--foreground))",
+                      border: "1px solid hsl(var(--primary))",
+                      borderLeftWidth: "4px",
+                      borderLeftColor: "hsl(var(--primary))",
+                    },
                     iconTheme: {
-                      primary: "green",
-                      secondary: "white",
+                      primary: "hsl(var(--primary))",
+                      secondary: "hsl(var(--primary-foreground))",
                     },
                   },
                   error: {
                     duration: 5000,
+                    style: {
+                      background: "hsl(var(--background))",
+                      color: "hsl(var(--foreground))",
+                      border: "1px solid hsl(var(--destructive))",
+                      borderLeftWidth: "4px",
+                      borderLeftColor: "hsl(var(--destructive))",
+                    },
                     iconTheme: {
-                      primary: "red",
-                      secondary: "white",
+                      primary: "hsl(var(--destructive))",
+                      secondary: "hsl(var(--destructive-foreground))",
+                    },
+                  },
+                  loading: {
+                    style: {
+                      background: "hsl(var(--background))",
+                      color: "hsl(var(--foreground))",
+                      border: "1px solid hsl(var(--muted-foreground))",
+                      borderLeftWidth: "4px",
+                      borderLeftColor: "hsl(var(--muted-foreground))",
                     },
                   },
                 }}

@@ -138,5 +138,15 @@
       "creatingCustomer": "Erreur lors de la création du client",
       "webhookFailed": "Échec du gestionnaire de webhook"
     }
+  },
+  "metadata": {
+    "home": {
+      "title": "Bienvenue ! | Mon Super Boilerplate",
+      "description": "Boilerplate Next.js moderne avec authentification, base de données et internationalisation"
+    },
+    "about": {
+      "title": "À propos | Mon Super Boilerplate",
+      "description": "Découvrez notre équipe, nos valeurs et notre histoire dans le développement de solutions digitales"
+    }
   }
 }

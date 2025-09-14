@@ -139,5 +139,15 @@
       "creatingCustomer": "Error creating customer",
       "webhookFailed": "Webhook handler failed"
     }
+  },
+  "metadata": {
+    "home": {
+      "title": "Welcome! | My Super Boilerplate",
+      "description": "Modern Next.js boilerplate with authentication, database and internationalization"
+    },
+    "about": {
+      "title": "About Us | My Super Boilerplate", 
+      "description": "Discover our team, values and history in developing digital solutions"
+    }
   }
 }

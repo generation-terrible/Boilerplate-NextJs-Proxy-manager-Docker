@@ -19,6 +19,10 @@ const nextConfig = {
         protocol: "https",
         hostname: "api-production.easy2pilot-v8.com",
       },
+      {
+        protocol: "https",
+        hostname: "images.unsplash.com",
+      },
     ],
   },
 };
