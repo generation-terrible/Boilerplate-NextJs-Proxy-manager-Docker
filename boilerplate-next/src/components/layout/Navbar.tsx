@@ -3,8 +3,8 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
-import { useState } from "react";
-import { Globe, Menu as MenuIcon, Sun, Moon, Monitor, Palette, User, LogIn, LogOut } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Globe, Menu as MenuIcon, Sun, Moon, Monitor, Palette, User, LogIn, LogOut, X, ChevronDown } from "lucide-react";
 import {
   locales,
   localeNames,
@@ -26,7 +26,31 @@ export function Navbar() {
   const [isLanguageMenuOpen, setIsLanguageMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const { theme, setTheme } = useThemeStore();
+
+  // Handle scroll effect
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 10);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close menus when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const target = event.target as HTMLElement;
+      if (!target.closest('.dropdown-menu')) {
+        setIsLanguageMenuOpen(false);
+        setIsThemeMenuOpen(false);
+        setIsUserMenuOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const handleLocaleChange = (newLocale) => {
     let newPathWithoutLocale = pathname;
@@ -47,6 +71,7 @@ export function Navbar() {
     { href: "/features", label: t("features") },
     { href: "/pricing", label: t("pricing") },
     { href: "/about", label: t("about") },
+    { href: "/contact", label: t("contact") },
   ];
 
   const themeOptions = [
@@ -55,6 +80,8 @@ export function Navbar() {
     { value: "system", label: tTheme("system"), icon: Monitor },
     { value: "orange", label: tTheme("orange"), icon: Palette },
     { value: "blue", label: tTheme("blue"), icon: Palette },
+    { value: "purple", label: tTheme("purple"), icon: Palette },
+    { value: "green", label: tTheme("green"), icon: Palette },
   ];
 
   const getCurrentThemeIcon = () => {
@@ -65,196 +92,239 @@ export function Navbar() {
   const CurrentThemeIcon = getCurrentThemeIcon();
 
   return (
-    <nav className="bg-background border-b sticky top-0 z-50">
-      <div className="container mx-auto px-4 flex items-center justify-between h-16">
-        <Link href="/" className="font-bold text-xl text-primary">
-          {t("siteTitle")}
-        </Link>
+    <nav className={`bg-background/80 backdrop-blur-lg border-b sticky top-0 z-50 transition-all duration-300 ${
+      isScrolled ? 'shadow-lg border-border/50' : 'border-transparent'
+    }`}>
+      <div className="container mx-auto px-4 lg:px-6 xl:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <Link 
+            href="/" 
+            className="font-bold text-xl text-primary hover:text-primary/80 transition-colors"
+          >
+            {t("siteTitle")}
+          </Link>
 
-        {/* Desktop Navigation */}
-        <div className="hidden md:flex space-x-6">
-          {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="text-foreground hover:text-primary transition-colors"
-            >
-              {link.label}
-            </Link>
-          ))}
-        </div>
+          {/* Desktop Navigation */}
+          <div className="hidden lg:flex items-center space-x-8">
+            {navLinks.map((link) => {
+              const isActive = pathname === link.href || pathname === `/${currentLocale}${link.href}`;
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`relative text-sm font-medium transition-colors duration-200 hover:text-primary ${
+                    isActive 
+                      ? 'text-primary' 
+                      : 'text-foreground/70'
+                  }`}
+                >
+                  {link.label}
+                  {isActive && (
+                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-primary rounded-full"></span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
 
-        <div className="flex items-center space-x-2 md:space-x-4">
-          {/* Authentication Section */}
-          {status === "loading" ? (
-            <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
-          ) : session ? (
-            <div className="relative">
-              <button
-                onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-                className="flex items-center justify-center w-10 h-10 border border-border rounded-md hover:bg-accent transition-colors"
+          {/* Right Section */}
+          <div className="flex items-center space-x-2">
+            {/* Authentication Section */}
+            {status === "loading" ? (
+              <div className="w-8 h-8 border-2 border-primary/30 border-t-primary rounded-full animate-spin"></div>
+            ) : session ? (
+              <div className="relative dropdown-menu">
+                <button
+                  onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
+                  className="flex items-center space-x-2 px-3 py-2 rounded-lg hover:bg-accent transition-colors duration-200"
+                >
+                  <div className="w-8 h-8 bg-gradient-to-br from-primary/20 to-primary/10 rounded-full flex items-center justify-center">
+                    <User className="h-4 w-4 text-primary" />
+                  </div>
+                  <ChevronDown className={`h-4 w-4 text-muted-foreground transition-transform duration-200 hidden sm:block ${
+                    isUserMenuOpen ? 'rotate-180' : ''
+                  }`} />
+                </button>
+
+                {isUserMenuOpen && (
+                  <div className="absolute right-0 mt-2 w-64 bg-background/95 backdrop-blur-lg border border-border/50 rounded-xl shadow-xl z-50 overflow-hidden">
+                    <div className="px-4 py-3 border-b border-border/50 bg-muted/20">
+                      <p className="text-sm font-medium">{session.user?.name || session.user?.email}</p>
+                      <p className="text-xs text-muted-foreground truncate">{session.user?.email}</p>
+                    </div>
+                    <div className="py-2">
+                      <Link
+                        href="/dashboard"
+                        className="flex items-center px-4 py-2 text-sm hover:bg-accent/50 transition-colors"
+                        onClick={() => setIsUserMenuOpen(false)}
+                      >
+                        <User className="h-4 w-4 mr-3 text-muted-foreground" />
+                        Dashboard
+                      </Link>
+                      {session.user?.isAdmin && (
+                        <Link
+                          href="/admin"
+                          className="flex items-center px-4 py-2 text-sm hover:bg-accent/50 transition-colors"
+                          onClick={() => setIsUserMenuOpen(false)}
+                        >
+                          <User className="h-4 w-4 mr-3 text-muted-foreground" />
+                          Administration
+                        </Link>
+                      )}
+                    </div>
+                    <div className="border-t border-border/50 py-2">
+                      <button
+                        onClick={() => {
+                          setIsUserMenuOpen(false);
+                          signOut();
+                        }}
+                        className="flex items-center w-full px-4 py-2 text-sm text-red-600 hover:bg-red-50 dark:hover:bg-red-500/10 transition-colors"
+                      >
+                        <LogOut className="h-4 w-4 mr-3" />
+                        Se déconnecter
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Button
+                onClick={() => signIn()}
+                className="hidden sm:flex items-center space-x-2 px-4 py-2 text-sm"
+                variant="default"
               >
-                <User className="h-5 w-5" />
-                <span className="sr-only">Menu utilisateur</span>
+                <LogIn className="h-4 w-4" />
+                <span>Connexion</span>
+              </Button>
+            )}
+
+            {/* Theme Selector */}
+            <div className="relative dropdown-menu">
+              <button
+                onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
+                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-accent transition-colors duration-200"
+              >
+                <CurrentThemeIcon className="h-5 w-5" />
               </button>
 
-              {isUserMenuOpen && (
-                <div className="absolute right-0 mt-2 py-2 w-56 bg-background border border-border rounded-md shadow-lg z-50">
-                  <div className="px-4 py-2 border-b border-border">
-                    <p className="text-sm font-medium">{session.user?.name || session.user?.email}</p>
-                    <p className="text-xs text-muted-foreground">{session.user?.email}</p>
+              {isThemeMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-background/95 backdrop-blur-lg border border-border/50 rounded-xl shadow-xl z-50 overflow-hidden">
+                  <div className="py-2">
+                    {themeOptions.map((option) => {
+                      const IconComponent = option.icon;
+                      return (
+                        <button
+                          key={option.value}
+                          onClick={() => {
+                            setTheme(option.value);
+                            setIsThemeMenuOpen(false);
+                          }}
+                          className={`w-full flex items-center px-4 py-2 text-sm hover:bg-accent/50 transition-colors ${
+                            theme === option.value ? 'bg-accent/30 text-primary' : ''
+                          }`}
+                        >
+                          <IconComponent className="h-4 w-4 mr-3 text-muted-foreground" />
+                          {option.label}
+                        </button>
+                      );
+                    })}
                   </div>
-                  <Link
-                    href="/dashboard"
-                    className="block w-full px-4 py-2 text-left hover:bg-accent transition-colors text-sm"
-                    onClick={() => setIsUserMenuOpen(false)}
-                  >
-                    <span className="flex items-center">
-                      <User className="h-4 w-4 mr-2" />
-                      Dashboard
-                    </span>
-                  </Link>
-                  {session.user?.isAdmin && (
-                    <Link
-                      href="/admin"
-                      className="block w-full px-4 py-2 text-left hover:bg-accent transition-colors text-sm"
-                      onClick={() => setIsUserMenuOpen(false)}
-                    >
-                      <span className="flex items-center">
-                        <User className="h-4 w-4 mr-2" />
-                        Administration
-                      </span>
-                    </Link>
-                  )}
-                  <hr className="my-2" />
-                  <button
-                    onClick={() => {
-                      setIsUserMenuOpen(false);
-                      signOut();
-                    }}
-                    className="block w-full px-4 py-2 text-left hover:bg-accent transition-colors text-sm text-destructive"
-                  >
-                    <span className="flex items-center">
-                      <LogOut className="h-4 w-4 mr-2" />
-                      Se déconnecter
-                    </span>
-                  </button>
                 </div>
               )}
             </div>
-          ) : (
-            <div className="flex items-center space-x-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => signIn()}
-                className="hidden sm:flex items-center"
+
+            {/* Language Selector */}
+            <div className="relative dropdown-menu">
+              <button
+                onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
+                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-accent transition-colors duration-200"
               >
-                <LogIn className="h-4 w-4 mr-2" />
-                Connexion
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => signIn()}
-                className="sm:hidden"
-              >
-                <LogIn className="h-4 w-4" />
-              </Button>
+                <Globe className="h-5 w-5" />
+              </button>
+
+              {isLanguageMenuOpen && (
+                <div className="absolute right-0 mt-2 w-48 bg-background/95 backdrop-blur-lg border border-border/50 rounded-xl shadow-xl z-50 overflow-hidden">
+                  <div className="py-2">
+                    {locales.map((loc) => (
+                      <button
+                        key={loc}
+                        onClick={() => handleLocaleChange(loc)}
+                        disabled={currentLocale === loc}
+                        className={`w-full flex items-center px-4 py-2 text-sm hover:bg-accent/50 transition-colors disabled:opacity-50 ${
+                          currentLocale === loc ? 'bg-accent/30 text-primary' : ''
+                        }`}
+                      >
+                        <span className="mr-3 text-lg">{localeFlags[loc]}</span>
+                        {localeNames[loc] || loc.toUpperCase()}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              )}
             </div>
-          )}
 
-          {/* Theme Selector */}
-          <div className="relative">
-            <button
-              onClick={() => setIsThemeMenuOpen(!isThemeMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 border border-border rounded-md hover:bg-accent transition-colors"
-            >
-              <CurrentThemeIcon className="h-5 w-5" />
-              <span className="sr-only">{tTheme("label")}</span>
-            </button>
-
-            {isThemeMenuOpen && (
-              <div className="absolute right-0 mt-2 py-2 w-48 bg-background border border-border rounded-md shadow-lg z-50">
-                {themeOptions.map((option) => {
-                  const IconComponent = option.icon;
-                  return (
-                    <button
-                      key={option.value}
-                      onClick={() => {
-                        setTheme(option.value);
-                        setIsThemeMenuOpen(false);
-                      }}
-                      className={`w-full px-4 py-2 text-left hover:bg-accent transition-colors flex items-center ${
-                        theme === option.value ? 'bg-accent' : ''
-                      }`}
-                    >
-                      <IconComponent className="h-4 w-4 mr-2" />
-                      {option.label}
-                    </button>
-                  );
-                })}
-              </div>
-            )}
+            {/* Mobile Menu Button */}
+            <div className="lg:hidden">
+              <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="flex items-center justify-center w-10 h-10 rounded-lg hover:bg-accent transition-colors duration-200"
+              >
+                {isMobileMenuOpen ? (
+                  <X className="h-6 w-6" />
+                ) : (
+                  <MenuIcon className="h-6 w-6" />
+                )}
+              </button>
+            </div>
           </div>
+        </div>
 
-          {/* Language Selector */}
-          <div className="relative">
-            <button
-              onClick={() => setIsLanguageMenuOpen(!isLanguageMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 border border-border rounded-md hover:bg-accent transition-colors"
-            >
-              <Globe className="h-5 w-5" />
-              <span className="sr-only">{t("changeLanguage")}</span>
-            </button>
-
-            {isLanguageMenuOpen && (
-              <div className="absolute right-0 mt-2 py-2 w-48 bg-background border border-border rounded-md shadow-lg z-50">
-                {locales.map((loc) => (
-                  <button
-                    key={loc}
-                    onClick={() => handleLocaleChange(loc)}
-                    disabled={currentLocale === loc}
-                    className="w-full px-4 py-2 text-left hover:bg-accent disabled:opacity-50 disabled:cursor-not-allowed flex items-center transition-colors"
+        {/* Mobile Menu */}
+        <div className={`lg:hidden transition-all duration-300 ease-in-out ${
+          isMobileMenuOpen 
+            ? 'max-h-96 opacity-100 pb-6' 
+            : 'max-h-0 opacity-0 overflow-hidden'
+        }`}>
+          <div className="pt-4 border-t border-border/50">
+            <div className="space-y-2">
+              {navLinks.map((link) => {
+                const isActive = pathname === link.href || pathname === `/${currentLocale}${link.href}`;
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`block px-4 py-3 rounded-lg text-base font-medium transition-colors ${
+                      isActive 
+                        ? 'bg-primary/10 text-primary' 
+                        : 'text-foreground/70 hover:bg-accent/50 hover:text-primary'
+                    }`}
+                    onClick={() => setIsMobileMenuOpen(false)}
                   >
-                    <span className="mr-2">{localeFlags[loc]}</span>
-                    {localeNames[loc] || loc.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="flex items-center justify-center w-10 h-10 border border-border rounded-md hover:bg-accent transition-colors"
-            >
-              <MenuIcon className="h-6 w-6" />
-              <span className="sr-only">{t("openMenu")}</span>
-            </button>
+                    {link.label}
+                  </Link>
+                );
+              })}
+              
+              {/* Mobile Auth Button */}
+              {!session && (
+                <div className="pt-4 border-t border-border/50">
+                  <Button
+                    onClick={() => {
+                      signIn();
+                      setIsMobileMenuOpen(false);
+                    }}
+                    className="w-full flex items-center justify-center space-x-2"
+                  >
+                    <LogIn className="h-4 w-4" />
+                    <span>Connexion</span>
+                  </Button>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
-      {isMobileMenuOpen && (
-        <div className="md:hidden border-t border-border bg-background">
-          <div className="px-4 py-4 space-y-3">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="block text-lg hover:text-primary transition-colors py-2"
-                onClick={() => setIsMobileMenuOpen(false)}
-              >
-                {link.label}
-              </Link>
-            ))}
-          </div>
-        </div>
-      )}
     </nav>
   );
 }

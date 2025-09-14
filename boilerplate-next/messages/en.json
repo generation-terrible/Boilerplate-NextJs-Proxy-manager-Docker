@@ -7,11 +7,13 @@
   },
   "ThemeSwitcher": {
     "label": "Theme:",
-    "light": "Light",
-    "dark": "Dark",
+    "light": "Clean Slate",
+    "dark": "Midnight Pro",
     "system": "System",
-    "orange": "Orange",
-    "blue": "Blue"
+    "orange": "Sunset Orange",
+    "blue": "Ocean Blue",
+    "purple": "Nebula Purple",
+    "green": "Forest Green"
   },
   "Navbar": {
     "siteTitle": "My App",
@@ -19,6 +21,7 @@
     "features": "Features",
     "pricing": "Pricing",
     "about": "About",
+    "contact": "Contact",
     "changeLanguage": "Change language",
     "openMenu": "Open menu"
   },
@@ -148,6 +151,10 @@
     "about": {
       "title": "About Us | My Super Boilerplate", 
       "description": "Discover our team, values and history in developing digital solutions"
+    },
+    "contact": {
+      "title": "Contact | My Super Boilerplate",
+      "description": "Contact us for your project. Free quote, fast response and personalized support"
     }
   }
 }

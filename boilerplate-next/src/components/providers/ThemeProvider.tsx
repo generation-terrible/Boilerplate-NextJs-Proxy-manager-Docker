@@ -9,6 +9,8 @@ const themeClassMap = {
   dark: "dark",
   orange: "theme-orange",
   blue: "theme-blue",
+  purple: "theme-purple",
+  green: "theme-green",
 };
 
 export function ThemeProvider({ children }) {

@@ -9,7 +9,7 @@ const authPagePatterns = ["/login", "/register"];
 // Pour l'instant, nous considérons les pages d'authentification comme publiques
 // car le middleware auth gérera la redirection si l'utilisateur est déjà connecté.
 // Si vous avez d'autres pages purement publiques (ex: /about), ajoutez-les ici.
-const publicPagePatterns = [];
+const publicPagePatterns = ["/", "/about", "/contact", "/features", "/pricing"];
 // Pages admin (nécessitent isAdmin = true)
 const adminPagePatterns = ["/admin"];
 

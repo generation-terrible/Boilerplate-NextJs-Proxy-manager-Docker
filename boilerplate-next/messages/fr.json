@@ -7,11 +7,13 @@
   },
   "ThemeSwitcher": {
     "label": "Thème :",
-    "light": "Clair",
-    "dark": "Sombre",
+    "light": "Ardoise Claire",
+    "dark": "Minuit Pro",
     "system": "Système",
-    "orange": "Orange",
-    "blue": "Bleu"
+    "orange": "Orange Couchant",
+    "blue": "Bleu Océan",
+    "purple": "Violet Nébuleuse",
+    "green": "Vert Forêt"
   },
   "Navbar": {
     "siteTitle": "Mon Appli",
@@ -19,6 +21,7 @@
     "features": "Fonctionnalités",
     "pricing": "Tarifs",
     "about": "À Propos",
+    "contact": "Contact",
     "changeLanguage": "Changer de langue",
     "openMenu": "Ouvrir le menu"
   },
@@ -147,6 +150,10 @@
     "about": {
       "title": "À propos | Mon Super Boilerplate",
       "description": "Découvrez notre équipe, nos valeurs et notre histoire dans le développement de solutions digitales"
+    },
+    "contact": {
+      "title": "Contact | Mon Super Boilerplate", 
+      "description": "Contactez-nous pour votre projet. Devis gratuit, réponse rapide et accompagnement personnalisé"
     }
   }
 }
