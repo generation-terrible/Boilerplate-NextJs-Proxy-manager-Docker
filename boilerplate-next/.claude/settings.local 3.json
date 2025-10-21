@@ -33,32 +33,9 @@
       "Bash(npm run docker:setup:*)",
       "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js my-saas-app-test --typescript --docker)",
       "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js auth-test --typescript --docker)",
-      "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js cli-test-final --typescript --docker)",
-      "mcp__shadcn__get_project_registries",
-      "mcp__shadcn__search_items_in_registries",
-      "mcp__shadcn__get_add_command_for_items",
-      "Bash(pnpm dlx shadcn@latest add:*)",
-      "Bash(pnpm lint:*)",
-      "Bash(pnpm build:*)",
-      "Bash(pnpm add:*)",
-      "mcp__playwright__browser_navigate",
-      "mcp__playwright__browser_click",
-      "mcp__playwright__browser_resize",
-      "mcp__playwright__browser_take_screenshot",
-      "mcp__playwright__browser_hover",
-      "mcp__playwright__browser_snapshot",
-      "mcp__playwright__browser_console_messages",
-      "mcp__playwright__browser_wait_for",
-      "mcp__playwright__browser_evaluate",
-      "Bash(pnpm dev:*)",
-      "mcp__playwright__browser_close",
-      "Bash(mv:*)"
+      "Bash(/Users/yannberlingeri/Desktop/create-saas-app-standalone/dist/index.js cli-test-final --typescript --docker)"
     ],
     "deny": [],
     "ask": []
-  },
-  "enableAllProjectMcpServers": true,
-  "enabledMcpjsonServers": [
-    "shadcn"
-  ]
+  }
 }

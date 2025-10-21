@@ -52,7 +52,7 @@ export function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
-  const handleLocaleChange = (newLocale: string) => {
+  const handleLocaleChange = (newLocale) => {
     let newPathWithoutLocale = pathname;
     if (newPathWithoutLocale.startsWith(`/${currentLocale}`)) {
       newPathWithoutLocale =
